@@ -1,0 +1,181 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+"""The type of case the movie item is in"""
+enum CaseType {
+  Box
+  Digibook
+  Plain
+  Slipcover
+  Steelbook
+}
+
+input CaseTypeFilterInput {
+  relation: FilterType!
+  value: CaseType!
+  value2: CaseType
+}
+
+input DateFilterInput {
+  relation: FilterType!
+  value: DateTime!
+  value2: DateTime
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+"""A date without time"""
+scalar DateType
+
+"""The digital movie format included, if any"""
+enum DigitalType {
+  DC
+  DCUV
+  None
+  UV
+}
+
+input DigitalTypeFilterInput {
+  relation: FilterType!
+  value: DigitalType!
+  value2: DigitalType
+}
+
+"""The filter relationship"""
+enum FilterType {
+  between
+  endsWith
+  equal
+  like
+  startsWith
+}
+
+"""The format of the movie item"""
+enum FormatType {
+  BluRay
+  DVD
+  Digital
+  UV
+  UltraHD
+}
+
+input FormatTypeFilterInput {
+  relation: FilterType!
+  value: FormatType!
+  value2: FormatType
+}
+
+type Movie {
+  movieID: Int!
+  itemID: Int
+  movieTitle: String
+  movieURL: String
+}
+
+type MovieItem {
+  itemID: Int!
+  ordered: Int
+  itemName: String!
+  caseType: CaseType!
+  digitalType: DigitalType!
+  is3D: YesNo!
+  isWatched: YesNo!
+  formatType: FormatType!
+  itemStatus: StatusType!
+  releaseDate: DateType
+  itemURL: String!
+  itemNotes: String
+}
+
+type Mutation {
+  addMovieItem(itemName: String!, caseType: CaseType!, digitalType: DigitalType!, is3D: YesNo!, isWatched: YesNo!, formatType: FormatType!, itemStatus: StatusType!, releaseDate: DateType, itemURL: String!, itemNotes: String): MovieItem!
+  markMovieWatched(isWatched: YesNo!, itemID: Int!): MovieItem!
+  updateMovieItem(itemName: String!, caseType: CaseType!, digitalType: DigitalType!, is3D: YesNo!, isWatched: YesNo!, formatType: FormatType!, itemStatus: StatusType!, releaseDate: DateType, itemURL: String!, itemNotes: String, itemID: Int!): MovieItem!
+  addMovie(itemID: Int!, movieTitle: String!, movieURL: String!): Movie!
+  updateMovie(itemID: Int, movieTitle: String, movieURL: String, movieID: Int!): Movie!
+}
+
+input OrderBy {
+  field: String!
+  direction: OrderType!
+}
+
+"""The order direction"""
+enum OrderType {
+  ASC
+  DESC
+}
+
+type Query {
+  countMovieItems(itemName: StringFilterInput, caseType: CaseTypeFilterInput, digitalType: DigitalTypeFilterInput, is3D: YesNoFilterInput, isWatched: YesNoFilterInput, formatType: FormatTypeFilterInput, itemStatus: StatusTypeFilterInput, releaseDate: DateFilterInput): Int!
+  movieItems(itemName: StringFilterInput, caseType: CaseTypeFilterInput, digitalType: DigitalTypeFilterInput, is3D: YesNoFilterInput, isWatched: YesNoFilterInput, formatType: FormatTypeFilterInput, itemStatus: StatusTypeFilterInput, releaseDate: DateFilterInput, limit: Int = 25, skip: Int = 0, order: [OrderBy!]): [MovieItem!]!
+  movieItem(itemID: Int!): MovieItem!
+  countMovies: Int!
+  movies(itemID: Int!): [Movie!]!
+}
+
+"""The current status of the movie item"""
+enum StatusType {
+  Owned
+  Selling
+  Waiting
+  Wanted
+}
+
+input StatusTypeFilterInput {
+  relation: FilterType!
+  value: StatusType!
+  value2: StatusType
+}
+
+input StringFilterInput {
+  relation: FilterType!
+  value: String!
+  value2: String
+}
+
+"""Yes or No flag"""
+enum YesNo {
+  N
+  Y
+}
+
+input YesNoFilterInput {
+  relation: FilterType!
+  value: YesNo!
+  value2: YesNo
+}

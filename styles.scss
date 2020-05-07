@@ -1,0 +1,71 @@
+/*! bulmaswatch v0.6.2 | MIT License */
+@import "~bulmaswatch/cerulean/variables";
+@import "~bulma/bulma";
+@import "~bulmaswatch/cerulean/overrides";
+
+// Global namespace
+
+:root {
+	--primary: #{$primary};
+	--grey-darker: hsl(0, 0%, 21%);
+	--grey-dark: hsl(0, 0%, 29%);
+	--grey: hsl(0, 0%, 48%);
+	--grey-light: hsl(0, 0%, 71%);
+	--grey-lighter: hsl(0, 0%, 86%);
+}
+
+html,
+body,
+#__next {
+	height: 100%;
+	width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+// App layout
+
+// Pages
+
+// Components
+
+.is-hoverable {
+	z-index: 1;
+}
+
+.item-title {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.item-image {
+	padding-left: 20%;
+	padding-right: 20%;
+
+	img {
+		height: 239px;
+	}
+}
+
+.item-attribute {
+	width: 30px;
+	display: inline-block;
+}
+
+.item-uv,
+.item-dc {
+	font-weight: bold;
+	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.item-uv {
+	color: purple;
+}

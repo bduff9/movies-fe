@@ -1,0 +1,172 @@
+{
+  "name": "movies-fe",
+  "version": "0.0.1",
+  "description": "Movie and movie item tracker, front-end only.",
+  "keywords": [
+    "aswnn",
+    "react",
+    "typescript",
+    "movies",
+    "nextjs"
+  ],
+  "homepage": "https://www.asitewithnoname.com/",
+  "license": "MIT",
+  "author": "Brian Duffey <brian.e.duffey@gmail.com>",
+  "contributors": [],
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bduff9/movies-fe"
+  },
+  "scripts": {
+    "build": "next build",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "dev": "next dev -p 3005",
+    "gql:download": "apollo client:download-schema graphql/schema.graphql --endpoint=http://localhost:4000/dev/graphql",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
+    "lint:script": "scriptlint && npmPkgJsonLint .",
+    "lint:script:fix": "scriptlint --fix",
+    "setup": "npx typesync && npm i && npm prune",
+    "start": "next start",
+    "test": "jest",
+    "test:coverage": "jest --coverage --env=jsdom --coverage --testResultsProcessor ./node_modules/jest-sonar-reporter/index.js",
+    "test:watch": "jest --watch",
+    "typeCheck": "tsc"
+  },
+  "config": {},
+  "dependencies": {
+    "@apollo/react-hooks": "3.1.5",
+    "@apollo/react-ssr": "3.1.5",
+    "@fortawesome/fontawesome-pro": "5.13.0",
+    "@fortawesome/fontawesome-svg-core": "1.2.28",
+    "@fortawesome/free-brands-svg-icons": "5.13.0",
+    "@fortawesome/free-regular-svg-icons": "5.13.0",
+    "@fortawesome/pro-light-svg-icons": "5.13.0",
+    "@fortawesome/pro-regular-svg-icons": "5.13.0",
+    "@fortawesome/pro-solid-svg-icons": "5.13.0",
+    "@fortawesome/react-fontawesome": "0.1.9",
+    "@zeit/next-css": "1.0.1",
+    "apollo-cache-inmemory": "1.6.5",
+    "apollo-cache-persist-dev": "0.2.1",
+    "apollo-client": "2.6.8",
+    "apollo-link-context": "1.0.20",
+    "apollo-link-http": "1.5.17",
+    "bloomer": "0.6.5",
+    "bulma": "0.8.2",
+    "bulmaswatch": "0.8.1",
+    "clsx": "1.1.0",
+    "date-fns": "2.13.0",
+    "formik": "2.1.4",
+    "graphql": "15.0.0",
+    "graphql-tag": "2.10.3",
+    "isomorphic-unfetch": "3.0.0",
+    "next": "9.3.6",
+    "next-offline": "5.0.2",
+    "next-with-apollo": "5.0.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-toastify": "6.0.0-rc.2-1",
+    "sass": "1.26.5",
+    "styled-components": "5.1.0",
+    "universal-cookie": "4.0.3",
+    "yup": "0.28.5"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.13.5",
+    "@graphql-codegen/fragment-matcher": "1.13.5",
+    "@graphql-codegen/introspection": "1.13.5",
+    "@graphql-codegen/typescript": "1.13.5",
+    "@graphql-codegen/typescript-document-nodes": "1.13.5",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.13.5",
+    "@graphql-codegen/typescript-operations": "1.13.5",
+    "@graphql-codegen/typescript-react-apollo": "1.13.5",
+    "@types/autoprefixer": "9.7.2",
+    "@types/eslint": "6.8.0",
+    "@types/node": "13.13.5",
+    "@types/node-sass": "4.11.0",
+    "@types/react": "16.9.34",
+    "@types/react-dom": "16.9.7",
+    "@types/sass": "1.16.0",
+    "@types/styled-components": "5.1.0",
+    "@types/stylelint": "9.10.1",
+    "@types/universal-cookie": "2.2.0",
+    "@types/yup": "0.28.0",
+    "@typescript-eslint/eslint-plugin": "2.31.0",
+    "@typescript-eslint/parser": "2.31.0",
+    "@welldone-software/why-did-you-render": "4.2.0",
+    "autoprefixer": "9.7.6",
+    "eslint": "6.8.0",
+    "eslint-plugin-css-modules": "2.11.0",
+    "eslint-plugin-graphql": "3.1.1",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-prettierx": "0.11.0",
+    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "eslint-plugin-you-dont-need-momentjs": "1.6.0",
+    "husky": "4.2.5",
+    "jest": "26.0.1",
+    "lint-staged": "10.2.2",
+    "node-sass": "4.14.1",
+    "npm-package-json-lint": "5.1.0",
+    "scriptlint": "2.1.1",
+    "stylefmt": "6.0.3",
+    "stylelint": "13.3.3",
+    "stylelint-config-standard": "20.0.0",
+    "ts-jest": "25.5.0",
+    "typescript": "3.8.3"
+  },
+  "engines": {
+    "node": "12.16.2"
+  },
+  "private": true,
+  "husky": {
+    "hooks": {
+      "post-merge": "npm run setup",
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFiles": [
+      "<rootDir>src/setupTests.js"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{md,json,css}": [
+      "prettierx --write"
+    ],
+    "**/*.scss": [
+      "stylefmt",
+      "stylelint --syntax scss --fix"
+    ],
+    "package.json": [
+      "scriptlint --fix",
+      "npmPkgJsonLint ."
+    ]
+  },
+  "browserslist": {
+    "production": [
+      "last 2 chrome versions",
+      "last 2 and_chr versions",
+      "last 2 ff versions",
+      "last 2 safari versions",
+      "last 2 ios versions",
+      "last 2 edge versions",
+      "ie >= 11"
+    ],
+    "development": [
+      "last 2 chrome versions",
+      "last 2 and_chr versions",
+      "last 2 ff versions",
+      "last 2 safari versions",
+      "last 2 ios versions",
+      "last 2 edge versions",
+      "ie >= 11"
+    ]
+  }
+}

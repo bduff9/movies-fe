@@ -1,0 +1,11 @@
+{
+  "author": "Brian Duffey",
+  "background": {
+    "scripts": []
+  },
+  "homepage_url": "https://movies.asitewithnoname.com/",
+  "manifest_version": 1,
+  "name": "Movies Application",
+  "short_name": "Movies",
+  "version": "0.0.1"
+}
