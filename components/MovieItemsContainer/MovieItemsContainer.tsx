@@ -19,7 +19,6 @@ import {
 	TFilterType,
 } from '../../utils/types';
 import Filters from '../Filters/Filters';
-import Loading from '../Loading/Loading';
 import MovieItemsDetail from '../MovieItemsDetail/MovieItemsDetail';
 import MovieItemsGrid from '../MovieItemsGrid/MovieItemsGrid';
 import MovieItemsList from '../MovieItemsList/MovieItemsList';
@@ -118,7 +117,6 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 	updateFilters,
 	...rest
 }): ReactElement => {
-	console.log({ filters });
 	const { data, error, loading } = useQuery<
 		MovieItemsContainerData,
 		QueryMovieItemsArgs
@@ -132,14 +130,11 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 			order: rest.sortBy,
 		},
 	});
-
-	if (loading && !data) return <Loading />;
-
 	const { countMovieItems, movieItems } = data || {
 		countMovieItems: 0,
 		movieItems: [],
 	};
-	const maxPage = loading ? page : Math.ceil(countMovieItems / ITEMS_PER_PAGE);
+	const maxPage = !data ? page : Math.ceil(countMovieItems / ITEMS_PER_PAGE);
 
 	return (
 		<main>
@@ -162,7 +157,7 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 					{viewAs === 'Grid' && (
 						<MovieItemsGrid
 							isFilterOpen={filterOpen}
-							loading={loading}
+							loading={loading && !data}
 							movieItems={movieItems}
 							key="movieItemsGrid"
 						/>
@@ -170,7 +165,7 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 					{viewAs === 'List' && (
 						<MovieItemsList
 							isFilterOpen={filterOpen}
-							loading={loading}
+							loading={loading && !data}
 							movieItems={movieItems}
 							key="movieItemsList"
 						/>
@@ -178,7 +173,7 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 					{viewAs === 'Detail' && (
 						<MovieItemsDetail
 							isFilterOpen={filterOpen}
-							loading={loading}
+							loading={loading && !data}
 							movieItems={movieItems}
 							key="movieItemsDetail"
 						/>

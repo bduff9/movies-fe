@@ -1,6 +1,5 @@
 # TODO
 
-- List flashes when loading
 - Optimistic updates don't work
   - add
   - update

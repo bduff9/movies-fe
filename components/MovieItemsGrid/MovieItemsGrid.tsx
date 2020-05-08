@@ -13,7 +13,7 @@ import {
 	MediaContent,
 	MediaLeft,
 } from 'bloomer';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, memo, ReactElement } from 'react';
 
 import { MovieItem } from '../../graphql/output';
 import { getFormattedDate } from '../../utils/dates';
@@ -22,6 +22,8 @@ import Loading from '../Loading/Loading';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
 import MovieItemGridContainer from '../styled-components/MovieItemGridContainer';
 import ToggleMovieItemWatched from '../ToggleMovieItemWatched/ToggleMovieItemWatched';
+
+import styles from './MovieItemsGrid.module.scss';
 
 interface MovieItemsGridProps {
 	isFilterOpen?: boolean;
@@ -33,7 +35,7 @@ const MovieItemGrid: FC<{ movieItem: MovieItem }> = ({
 	movieItem,
 }): ReactElement => (
 	<Column className="is-one-fifth-desktop" isSize={{ mobile: 6, tablet: 4 }}>
-		<Card>
+		<Card className={styles.movieItemCard}>
 			<CardHeader>
 				<CardHeaderTitle className="item-title" title={movieItem.itemName}>
 					{movieItem.itemName}
@@ -46,7 +48,7 @@ const MovieItemGrid: FC<{ movieItem: MovieItem }> = ({
 					<MovieItemPlaceholder title={movieItem.itemName} />
 				)}
 			</CardImage>
-			<CardContent>
+			<CardContent className={styles.movieItemContent}>
 				<Media>
 					<MediaLeft>
 						<Image
@@ -125,4 +127,4 @@ const MovieItemsGrid: FC<MovieItemsGridProps> = ({
 
 MovieItemsGrid.whyDidYouRender = true;
 
-export default MovieItemsGrid;
+export default memo(MovieItemsGrid);

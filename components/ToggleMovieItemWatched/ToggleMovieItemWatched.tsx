@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardFooterItem } from 'bloomer';
 import gql from 'graphql-tag';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, memo, ReactElement } from 'react';
 
 import { MutationMarkMovieWatchedArgs, YesNo } from '../../graphql/output';
 
@@ -83,4 +83,4 @@ const ToggleMovieItemWatched: FC<ToggleMovieItemWatchedProps> = ({
 
 ToggleMovieItemWatched.whyDidYouRender = true;
 
-export default ToggleMovieItemWatched;
+export default memo(ToggleMovieItemWatched);

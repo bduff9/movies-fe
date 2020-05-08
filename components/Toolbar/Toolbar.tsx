@@ -11,7 +11,15 @@ import {
 	NavbarMenu,
 	NavbarStart,
 } from 'bloomer';
-import React, { CSSProperties, FormEvent, FC, ReactElement } from 'react';
+import React, {
+	CSSProperties,
+	FormEvent,
+	FC,
+	memo,
+	MouseEvent,
+	ReactElement,
+	ReactText,
+} from 'react';
 
 import { VIEWS } from '../../utils/constants';
 import { TSortCol, TSort, TViewAs, TSavedView } from '../../utils/types';
@@ -71,6 +79,14 @@ const Toolbar: FC<ToolbarProps> = ({
 		},
 	};
 
+	const goToPage = (page: ReactText, ev: MouseEvent): false => {
+		ev.preventDefault();
+
+		paginate(page, maxPage);
+
+		return false;
+	};
+
 	return (
 		<Navbar isTransparent>
 			<NavbarMenu>
@@ -96,7 +112,7 @@ const Toolbar: FC<ToolbarProps> = ({
 						style={page < 2 ? styles.disabled : undefined}
 						title="Go to first"
 						href="#"
-						onClick={(): void => paginate(1, maxPage)}
+						onClick={(ev): false => goToPage(1, ev)}
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-double-left']} />
 					</NavbarItem>
@@ -104,7 +120,7 @@ const Toolbar: FC<ToolbarProps> = ({
 						style={page < 2 ? styles.disabled : undefined}
 						title="Go to previous"
 						href="#"
-						onClick={(): void => paginate(page - 1, maxPage)}
+						onClick={(ev): false => goToPage(page - 1, ev)}
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-left']} />
 					</NavbarItem>
@@ -113,8 +129,8 @@ const Toolbar: FC<ToolbarProps> = ({
 							isSize="small"
 							type="number"
 							value={page}
-							onChange={(ev: FormEvent<HTMLInputElement>): void =>
-								paginate(ev.currentTarget.value, maxPage)
+							onChange={(ev: FormEvent<HTMLInputElement>): false =>
+								goToPage(ev.currentTarget.value, (ev as unknown) as MouseEvent)
 							}
 						/>
 					</NavbarItem>
@@ -144,15 +160,17 @@ const Toolbar: FC<ToolbarProps> = ({
 							<FontAwesomeIcon icon={getViewIcon()} />
 						</NavbarLink>
 						<NavbarDropdown>
-							{VIEWS.map(view => (
-								<NavbarItem
-									href="#"
-									onClick={(): void => changeView(view)}
-									key={`view-${view}`}
-								>
-									{view === viewAs ? <b>{view}</b> : view}
-								</NavbarItem>
-							))}
+							{VIEWS.map(
+								(view): ReactElement => (
+									<NavbarItem
+										href="#"
+										onClick={(): void => changeView(view)}
+										key={`view-${view}`}
+									>
+										{view === viewAs ? <b>{view}</b> : view}
+									</NavbarItem>
+								),
+							)}
 						</NavbarDropdown>
 					</NavbarItem>
 					<NavbarItem href="#" onClick={toggleFilters}>
@@ -185,4 +203,4 @@ const Toolbar: FC<ToolbarProps> = ({
 
 Toolbar.whyDidYouRender = true;
 
-export default Toolbar;
+export default memo(Toolbar);

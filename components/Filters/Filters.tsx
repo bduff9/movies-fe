@@ -3,6 +3,7 @@ import React, {
 	ChangeEvent,
 	FC,
 	FormEvent,
+	memo,
 	ReactElement,
 	useState,
 } from 'react';
@@ -283,4 +284,4 @@ const Filters: FC<FiltersProps> = ({
 
 Filters.whyDidYouRender = true;
 
-export default Filters;
+export default memo(Filters);
