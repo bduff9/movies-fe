@@ -1,3 +1,4 @@
+import { ApolloQueryResult } from 'apollo-boost';
 import {
 	Column,
 	Columns,
@@ -15,17 +16,23 @@ import { getFormattedDate } from '../../utils/dates';
 import { getCaseIcon, getFormatImage, getStatusIcon } from '../../utils/icons';
 import Loading from '../Loading/Loading';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
+import {
+	QueryMovieItemsArgs,
+	MovieItemsContainerData,
+} from '../MovieItemsContainer/MovieItemsContainer';
 import MovieItemGridContainer from '../styled-components/MovieItemGridContainer';
 import ToggleMovieItemWatched from '../ToggleMovieItemWatched/ToggleMovieItemWatched';
 
-interface MovieItemsDetailProps {
-	isFilterOpen?: boolean;
-	loading: boolean;
-	movieItems: MovieItem[];
-}
+type MovieItemDetailProps = {
+	movieItem: MovieItem;
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
 
-const MovieItemList: FC<{ movieItem: MovieItem }> = ({
+const MovieItemList: FC<MovieItemDetailProps> = ({
 	movieItem,
+	refetch,
 }): ReactElement => (
 	<Column isSize="full">
 		<Media>
@@ -79,6 +86,7 @@ const MovieItemList: FC<{ movieItem: MovieItem }> = ({
 					<ToggleMovieItemWatched
 						isWatched={movieItem.isWatched === 'Y'}
 						itemID={movieItem.itemID}
+						refetch={refetch}
 					/>
 				)}
 			</MediaRight>
@@ -86,10 +94,20 @@ const MovieItemList: FC<{ movieItem: MovieItem }> = ({
 	</Column>
 );
 
+type MovieItemsDetailProps = {
+	isFilterOpen?: boolean;
+	loading: boolean;
+	movieItems: MovieItem[];
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
+
 const MovieItemsList: FC<MovieItemsDetailProps> = ({
 	isFilterOpen = false,
 	loading,
 	movieItems,
+	refetch,
 }): ReactElement => (
 	<MovieItemGridContainer isFluid offset={isFilterOpen ? '287px' : '104px'}>
 		<Columns isGrid isMultiline>
@@ -101,8 +119,9 @@ const MovieItemsList: FC<MovieItemsDetailProps> = ({
 				movieItems &&
 				movieItems.map(movieItem => (
 					<MovieItemList
-						movieItem={movieItem}
 						key={`movie-item-${movieItem.itemID}`}
+						movieItem={movieItem}
+						refetch={refetch}
 					/>
 				))
 			)}

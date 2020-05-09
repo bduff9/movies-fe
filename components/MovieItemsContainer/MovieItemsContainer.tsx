@@ -77,7 +77,7 @@ const ALL_MOVIE_ITEMS = gql`
 	}
 `;
 
-type QueryMovieItemsArgs = {
+export type QueryMovieItemsArgs = {
 	itemName?: TFilterType<string>;
 	caseType?: TFilterType<CaseType>;
 	digitalType?: TFilterType<DigitalType>;
@@ -91,10 +91,10 @@ type QueryMovieItemsArgs = {
 	order?: TSort[];
 };
 
-interface MovieItemsContainerData {
+export type MovieItemsContainerData = {
 	countMovieItems: Query['countMovieItems'];
 	movieItems: Query['movieItems'];
-}
+};
 
 interface MovieItemsContainerProps {
 	filterOpen: boolean;
@@ -117,7 +117,7 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 	updateFilters,
 	...rest
 }): ReactElement => {
-	const { data, error, loading } = useQuery<
+	const { data, error, loading, refetch } = useQuery<
 		MovieItemsContainerData,
 		QueryMovieItemsArgs
 	>(ALL_MOVIE_ITEMS, {
@@ -157,25 +157,28 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 					{viewAs === 'Grid' && (
 						<MovieItemsGrid
 							isFilterOpen={filterOpen}
+							key="movieItemsGrid"
 							loading={loading && !data}
 							movieItems={movieItems}
-							key="movieItemsGrid"
+							refetch={refetch}
 						/>
 					)}
 					{viewAs === 'List' && (
 						<MovieItemsList
 							isFilterOpen={filterOpen}
+							key="movieItemsList"
 							loading={loading && !data}
 							movieItems={movieItems}
-							key="movieItemsList"
+							refetch={refetch}
 						/>
 					)}
 					{viewAs === 'Detail' && (
 						<MovieItemsDetail
 							isFilterOpen={filterOpen}
+							key="movieItemsDetail"
 							loading={loading && !data}
 							movieItems={movieItems}
-							key="movieItemsDetail"
+							refetch={refetch}
 						/>
 					)}
 				</>

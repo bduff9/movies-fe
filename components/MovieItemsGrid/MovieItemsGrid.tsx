@@ -1,3 +1,4 @@
+import { ApolloQueryResult } from 'apollo-boost';
 import {
 	Card,
 	CardContent,
@@ -20,19 +21,25 @@ import { getFormattedDate } from '../../utils/dates';
 import { getCaseIcon, getFormatImage, getStatusIcon } from '../../utils/icons';
 import Loading from '../Loading/Loading';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
+import {
+	MovieItemsContainerData,
+	QueryMovieItemsArgs,
+} from '../MovieItemsContainer/MovieItemsContainer';
 import MovieItemGridContainer from '../styled-components/MovieItemGridContainer';
 import ToggleMovieItemWatched from '../ToggleMovieItemWatched/ToggleMovieItemWatched';
 
 import styles from './MovieItemsGrid.module.scss';
 
-interface MovieItemsGridProps {
-	isFilterOpen?: boolean;
-	loading: boolean;
-	movieItems: MovieItem[];
-}
+type MovieItemGridProps = {
+	movieItem: MovieItem;
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
 
-const MovieItemGrid: FC<{ movieItem: MovieItem }> = ({
+const MovieItemGrid: FC<MovieItemGridProps> = ({
 	movieItem,
+	refetch,
 }): ReactElement => (
 	<Column className="is-one-fifth-desktop" isSize={{ mobile: 6, tablet: 4 }}>
 		<Card className={styles.movieItemCard}>
@@ -93,6 +100,7 @@ const MovieItemGrid: FC<{ movieItem: MovieItem }> = ({
 					<ToggleMovieItemWatched
 						isWatched={movieItem.isWatched === 'Y'}
 						itemID={movieItem.itemID}
+						refetch={refetch}
 					/>
 				)}
 			</CardFooter>
@@ -100,10 +108,20 @@ const MovieItemGrid: FC<{ movieItem: MovieItem }> = ({
 	</Column>
 );
 
+type MovieItemsGridProps = {
+	isFilterOpen?: boolean;
+	loading: boolean;
+	movieItems: MovieItem[];
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
+
 const MovieItemsGrid: FC<MovieItemsGridProps> = ({
 	isFilterOpen = false,
 	loading,
 	movieItems,
+	refetch,
 }): ReactElement => (
 	<MovieItemGridContainer isFluid offset={isFilterOpen ? '287px' : '104px'}>
 		<Columns isGrid isMobile isMultiline>
@@ -115,8 +133,9 @@ const MovieItemsGrid: FC<MovieItemsGridProps> = ({
 				movieItems.map(
 					(movieItem): ReactElement => (
 						<MovieItemGrid
-							movieItem={movieItem}
 							key={`movie-item-${movieItem.itemID}`}
+							movieItem={movieItem}
+							refetch={refetch}
 						/>
 					),
 				)

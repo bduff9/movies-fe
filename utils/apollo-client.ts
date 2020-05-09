@@ -39,7 +39,18 @@ const link = authLink.concat(httpLink);
 
 export default withApollo(
 	({ initialState }): ApolloClient<NormalizedCacheObject> => {
-		const cache = new InMemoryCache().restore(initialState || {});
+		const cache = new InMemoryCache({
+			cacheRedirects: {
+				Query: {
+					movieItem: (_, args, { getCacheKey }): unknown =>
+						getCacheKey({ __typename: 'MovieItem', itemID: args.itemID }),
+					movieItems: (_, args, { getCacheKey }): unknown =>
+						args.itemIDs.map((itemID: unknown): unknown =>
+							getCacheKey({ __typename: 'MovieItems', itemID }),
+						),
+				},
+			},
+		}).restore(initialState || {});
 
 		if (typeof window !== 'undefined') {
 			persistCacheSync({

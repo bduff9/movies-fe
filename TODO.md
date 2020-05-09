@@ -1,10 +1,8 @@
 # TODO
 
-- Optimistic updates don't work
-  - add
-  - update
-  - toggle watched
 - Mobile use
+  - Filters
+  - Log Out
 - Deployment
   - FE
   - BE

@@ -1,3 +1,4 @@
+import { ApolloQueryResult } from 'apollo-boost';
 import {
 	Card,
 	CardContent,
@@ -20,17 +21,23 @@ import { getFormattedDate } from '../../utils/dates';
 import { getCaseIcon, getFormatImage, getStatusIcon } from '../../utils/icons';
 import Loading from '../Loading/Loading';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
+import {
+	QueryMovieItemsArgs,
+	MovieItemsContainerData,
+} from '../MovieItemsContainer/MovieItemsContainer';
 import MovieItemGridContainer from '../styled-components/MovieItemGridContainer';
 import ToggleMovieItemWatched from '../ToggleMovieItemWatched/ToggleMovieItemWatched';
 
-interface MovieItemsDetailProps {
-	isFilterOpen?: boolean;
-	loading: boolean;
-	movieItems: MovieItem[];
-}
+type MovieItemDetailProps = {
+	movieItem: MovieItem;
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
 
-const MovieItemDetail: FC<{ movieItem: MovieItem }> = ({
+const MovieItemDetail: FC<MovieItemDetailProps> = ({
 	movieItem,
+	refetch,
 }): ReactElement => (
 	<Column className="is-one-fifth">
 		<Card>
@@ -91,6 +98,7 @@ const MovieItemDetail: FC<{ movieItem: MovieItem }> = ({
 					<ToggleMovieItemWatched
 						isWatched={movieItem.isWatched === 'Y'}
 						itemID={movieItem.itemID}
+						refetch={refetch}
 					/>
 				)}
 			</CardFooter>
@@ -98,10 +106,20 @@ const MovieItemDetail: FC<{ movieItem: MovieItem }> = ({
 	</Column>
 );
 
+type MovieItemsDetailProps = {
+	isFilterOpen?: boolean;
+	loading: boolean;
+	movieItems: MovieItem[];
+	refetch: (
+		variables?: QueryMovieItemsArgs | undefined,
+	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
+};
+
 const MovieItemsDetail: FC<MovieItemsDetailProps> = ({
 	isFilterOpen = false,
 	loading,
 	movieItems,
+	refetch,
 }): ReactElement => (
 	<MovieItemGridContainer isFluid offset={isFilterOpen ? '287px' : '104px'}>
 		<Columns isGrid isMultiline>
@@ -111,12 +129,15 @@ const MovieItemsDetail: FC<MovieItemsDetailProps> = ({
 				</Column>
 			) : (
 				movieItems &&
-				movieItems.map(movieItem => (
-					<MovieItemDetail
-						movieItem={movieItem}
-						key={`movie-item-${movieItem.itemID}`}
-					/>
-				))
+				movieItems.map(
+					(movieItem): ReactElement => (
+						<MovieItemDetail
+							key={`movie-item-${movieItem.itemID}`}
+							movieItem={movieItem}
+							refetch={refetch}
+						/>
+					),
+				)
 			)}
 		</Columns>
 	</MovieItemGridContainer>

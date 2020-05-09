@@ -93,7 +93,7 @@ const EditMovieItem: NextPage<EditMovieItemProps> = ({ id }): ReactElement => {
 		{ error: editError, loading: editLoading },
 	] = useMutation<MutationUpdateMovieItemArgs, MovieItem>(EDIT_MOVIE_ITEM, {
 		awaitRefetchQueries: true,
-		refetchQueries: ['MovieItemsForDisplay'],
+		refetchQueries: ['MovieItemsForDisplay', 'MovieItems'],
 	});
 	const { data, error, loading } = useQuery<
 		{ movieItem: MovieItem },

@@ -62,7 +62,7 @@ const AddMovieItem: NextPage<AddMovieItemProps> = (): ReactElement => {
 		MutationAddMovieItemArgs
 	>(ADD_MOVIE_ITEM, {
 		awaitRefetchQueries: true,
-		refetchQueries: ['MovieItemsForDisplay'],
+		refetchQueries: ['MovieItemsForDisplay', 'MovieItems'],
 	});
 
 	return (
