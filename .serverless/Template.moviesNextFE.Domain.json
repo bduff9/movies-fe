@@ -1,0 +1,13 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "asitewithnoname.com",
+  "subdomains": [
+    {
+      "domain": "movies.asitewithnoname.com",
+      "distributionId": "E2P599JA1LGCWF",
+      "url": "https://dj1h1cdxa9o0w.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ]
+}

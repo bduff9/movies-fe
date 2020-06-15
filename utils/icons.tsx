@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMoneyBillAlt as farMoneyBillAlt } from '@fortawesome/free-regular-svg-icons';
 import {
+	faAngleDown as farAngleDown,
 	faBook as farBook,
 	faChevronDoubleLeft as farChevronDoubleLeft,
 	faChevronDoubleRight as farChevronDoubleRight,
@@ -37,17 +38,6 @@ import React from 'react';
 import { CaseType, FormatType, YesNo, StatusType } from '../graphql/output';
 
 library.add(
-	farMoneyBillAlt,
-	farBook,
-	farChevronDoubleLeft,
-	farChevronDoubleRight,
-	farChevronLeft,
-	farChevronRight,
-	farClipboard,
-	farList,
-	farSort,
-	farSquare,
-	farTable,
 	faBook,
 	faBox,
 	faCheck,
@@ -65,6 +55,18 @@ library.add(
 	faSquare,
 	faThLarge,
 	faTruck,
+	farAngleDown,
+	farBook,
+	farChevronDoubleLeft,
+	farChevronDoubleRight,
+	farChevronLeft,
+	farChevronRight,
+	farClipboard,
+	farList,
+	farMoneyBillAlt,
+	farSort,
+	farSquare,
+	farTable,
 );
 
 export const formatForGraphQL = (str: string): string =>

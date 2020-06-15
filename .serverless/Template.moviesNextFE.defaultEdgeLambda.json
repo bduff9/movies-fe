@@ -1,0 +1,17 @@
+{
+  "name": "orhxhyb-qz5m1c",
+  "hash": "Q7/W27m1vVAFzE5SM4xJ9718yrN/VPanreMy8sOpwdE=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/bduffey2/projects/movies/movies-fe/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs12.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::293459602653:role/orhxhyb-ii851vn"
+  },
+  "arn": "arn:aws:lambda:us-east-1:293459602653:function:orhxhyb-qz5m1c",
+  "region": "us-east-1"
+}

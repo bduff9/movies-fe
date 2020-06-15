@@ -1,0 +1,56 @@
+$mobilePhoneWidth: 600px;
+
+.toolbar {
+	display: flex;
+	flex-grow: 1;
+	flex-shrink: 0;
+	align-items: stretch;
+	flex-wrap: wrap;
+}
+
+.toolbarStart {
+	justify-content: flex-start;
+	margin-right: auto;
+	align-items: stretch;
+	display: flex;
+
+	@media only screen and (max-width: $mobilePhoneWidth) {
+		margin-left: auto;
+	}
+}
+
+.toolbarEnd {
+	justify-content: flex-end;
+	margin-left: auto;
+	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+
+	@media only screen and (max-width: $mobilePhoneWidth) {
+		justify-content: center;
+	}
+}
+
+.toolbarItem {
+	display: flex;
+	align-items: center;
+	flex-grow: 0;
+	flex-shrink: 0;
+	color: #4a4a4a;
+	line-height: 1.5;
+	padding: .5rem .75rem;
+	position: relative;
+}
+
+.disabled {
+	opacity: .5;
+	pointer-events: none;
+}
+
+.toolbarBreak {
+	height: 0;
+
+	@media only screen and (max-width: $mobilePhoneWidth) {
+		flex-basis: 100%;
+	}
+}

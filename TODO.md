@@ -1,8 +1,5 @@
 # TODO
 
-- Mobile use
-  - Filters
-  - Log Out
-- Deployment
-  - FE
-  - BE
+- Multiple views
+  - List
+  - Details

@@ -7,7 +7,9 @@ import Document, { DocumentContext } from 'next/document';
 //FIXME: FOUC here, have example on material but unsure for font awesome and bulma:
 
 class MoviesDocument extends Document {
-	static async getInitialProps (ctx: DocumentContext): DocumentInitialProps {
+	static async getInitialProps (
+		ctx: DocumentContext,
+	): Promise<DocumentInitialProps> {
 		const originalRenderPage = ctx.renderPage;
 
 		ctx.renderPage = (): RenderPageResult | Promise<RenderPageResult> =>

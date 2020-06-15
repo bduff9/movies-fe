@@ -44,10 +44,6 @@ export default withApollo(
 				Query: {
 					movieItem: (_, args, { getCacheKey }): unknown =>
 						getCacheKey({ __typename: 'MovieItem', itemID: args.itemID }),
-					movieItems: (_, args, { getCacheKey }): unknown =>
-						args.itemIDs.map((itemID: unknown): unknown =>
-							getCacheKey({ __typename: 'MovieItems', itemID }),
-						),
 				},
 			},
 		}).restore(initialState || {});

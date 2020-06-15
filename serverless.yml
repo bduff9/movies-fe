@@ -1,0 +1,4 @@
+moviesNextFE:
+  component: serverless-next.js@1.14.0-alpha.0
+  inputs:
+    domain: ["movies", "asitewithnoname.com"]

@@ -2,33 +2,36 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+	Button,
+	Dropdown,
+	DropdownContent,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
 	Input,
 	Navbar,
-	NavbarDropdown,
-	NavbarEnd,
-	NavbarItem,
-	NavbarLink,
-	NavbarMenu,
-	NavbarStart,
 } from 'bloomer';
+import clsx from 'clsx';
 import React, {
-	CSSProperties,
 	FormEvent,
 	FC,
 	memo,
 	MouseEvent,
 	ReactElement,
 	ReactText,
+	useState,
 } from 'react';
 
 import { VIEWS } from '../../utils/constants';
 import { TSortCol, TSort, TViewAs, TSavedView } from '../../utils/types';
 
+import styles from './Toolbar.module.scss';
+
 interface ToolbarProps {
 	maxPage: number;
 	page: number;
 	savedViews?: TSavedView[];
-	selectedView?: string;
+	selectedViewID?: number;
 	sortBy: TSort[];
 	viewAs: string;
 	changeView: (newView: TViewAs) => void;
@@ -43,15 +46,29 @@ const Toolbar: FC<ToolbarProps> = ({
 	page,
 	paginate,
 	savedViews = [],
-	selectedView = '',
+	selectedViewID,
 	sortBy,
 	sortItems,
 	toggleFilters,
 	viewAs,
 }): ReactElement => {
+	const [isSavedViewActive, setIsSavedViewActive] = useState<boolean>(false);
+	const [isViewActive, setIsViewActive] = useState<boolean>(false);
+	const [isSortActive, setIsSortActive] = useState<boolean>(false);
 	const { direction: sortDir, field: sortCol } = sortBy[0] || {
 		direction: 'DESC',
 		field: 'itemID',
+	};
+
+	const changeSavedView = (savedViewID: number): void => {
+		console.log('TODO: saved view changed', { savedViewID });
+
+		setIsSavedViewActive(false);
+	};
+
+	const changeViewWrapper = (newView: TViewAs): void => {
+		setIsViewActive(false);
+		changeView(newView);
 	};
 
 	const displayCurrentSort = (col: TSortCol): ReactElement => {
@@ -72,13 +89,6 @@ const Toolbar: FC<ToolbarProps> = ({
 		return 'question-square';
 	};
 
-	const styles: { [k: string]: CSSProperties } = {
-		disabled: {
-			opacity: 0.5,
-			pointerEvents: 'none',
-		},
-	};
-
 	const goToPage = (page: ReactText, ev: MouseEvent): false => {
 		ev.preventDefault();
 
@@ -89,42 +99,67 @@ const Toolbar: FC<ToolbarProps> = ({
 
 	return (
 		<Navbar isTransparent>
-			<NavbarMenu>
-				<NavbarStart>
-					<NavbarItem>
-						<select
-							value={selectedView}
-							onChange={(): void => console.log('changed saved view')}
-						>
-							<option value="">-- Select a Saved View --</option>
-							{savedViews.map(
-								({ id, name }): ReactElement => (
-									<option value={id} key={`view-${id}`}>
-										{name}
-									</option>
-								),
-							)}
-						</select>
-					</NavbarItem>
-				</NavbarStart>
-				<NavbarEnd>
-					<NavbarItem
-						style={page < 2 ? styles.disabled : undefined}
-						title="Go to first"
+			<div className={styles.toolbar}>
+				<div className={styles.toolbarStart}>
+					<div className={styles.toolbarItem}>
+						<Dropdown isActive={isSavedViewActive}>
+							<DropdownTrigger>
+								<Button
+									aria-controls="dropdown-menu"
+									aria-haspopup="true"
+									isOutlined
+									onClick={(): void =>
+										setIsSavedViewActive((isActive): boolean => !isActive)
+									}
+								>
+									<span>-- Select a Saved View --</span>
+									&nbsp;
+									<FontAwesomeIcon icon={['far', 'angle-down']} size="1x" />
+								</Button>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownContent>
+									{savedViews.map(
+										({ id, name }): ReactElement => (
+											<DropdownItem
+												href="#"
+												isActive={id === selectedViewID}
+												key={`saved-view-${id}`}
+												onClick={(): void => changeSavedView(id)}
+											>
+												{name}
+											</DropdownItem>
+										),
+									)}
+								</DropdownContent>
+							</DropdownMenu>
+						</Dropdown>
+					</div>
+				</div>
+				<div className={styles.toolbarEnd}>
+					<a
+						className={clsx(
+							styles.toolbarItem,
+							page < 2 ? styles.disabled : undefined,
+						)}
 						href="#"
 						onClick={(ev): false => goToPage(1, ev)}
+						title="Go to first"
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-double-left']} />
-					</NavbarItem>
-					<NavbarItem
-						style={page < 2 ? styles.disabled : undefined}
+					</a>
+					<a
+						className={clsx(
+							styles.toolbarItem,
+							page < 2 ? styles.disabled : undefined,
+						)}
 						title="Go to previous"
 						href="#"
 						onClick={(ev): false => goToPage(page - 1, ev)}
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-left']} />
-					</NavbarItem>
-					<NavbarItem title="Jump to...">
+					</a>
+					<div className={styles.toolbarItem} title="Jump to...">
 						<Input
 							isSize="small"
 							type="number"
@@ -133,70 +168,125 @@ const Toolbar: FC<ToolbarProps> = ({
 								goToPage(ev.currentTarget.value, (ev as unknown) as MouseEvent)
 							}
 						/>
-					</NavbarItem>
-					<NavbarItem
-						style={page >= maxPage ? styles.disabled : undefined}
+					</div>
+					<a
+						className={clsx(
+							styles.toolbarItem,
+							page >= maxPage ? styles.disabled : undefined,
+						)}
 						title="Go to next"
 						href="#"
 						onClick={(): void => paginate(page + 1, maxPage)}
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-right']} />
-					</NavbarItem>
-					<NavbarItem
-						style={page >= maxPage ? styles.disabled : undefined}
+					</a>
+					<a
+						className={clsx(
+							styles.toolbarItem,
+							page >= maxPage ? styles.disabled : undefined,
+						)}
 						title="Go to last"
 						href="#"
 						onClick={(): void => paginate(maxPage, maxPage)}
 					>
 						<FontAwesomeIcon icon={['far', 'chevron-double-right']} />
-					</NavbarItem>
-					<NavbarItem>
-						<a href="/item/add">
+					</a>
+					<div className={styles.toolbarBreak}></div>
+					<div className={styles.toolbarItem}>
+						<Button href="/item/add" isOutlined>
 							<FontAwesomeIcon icon="plus" />
-						</a>
-					</NavbarItem>
-					<NavbarItem hasDropdown isHoverable>
-						<NavbarLink href="#">
-							<FontAwesomeIcon icon={getViewIcon()} />
-						</NavbarLink>
-						<NavbarDropdown>
-							{VIEWS.map(
-								(view): ReactElement => (
-									<NavbarItem
+						</Button>
+					</div>
+					<div className={styles.toolbarItem}>
+						<Button href="#" isOutlined onClick={toggleFilters}>
+							<FontAwesomeIcon icon="search" />
+						</Button>
+					</div>
+					<div className={styles.toolbarItem}>
+						<Dropdown isActive={isViewActive}>
+							<DropdownTrigger>
+								<Button
+									aria-controls="dropdown-menu"
+									aria-haspopup="true"
+									isOutlined
+									onClick={(): void =>
+										setIsViewActive((isActive): boolean => !isActive)
+									}
+								>
+									<FontAwesomeIcon icon={getViewIcon()} />
+									&nbsp;
+									<FontAwesomeIcon icon={['far', 'angle-down']} size="1x" />
+								</Button>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownContent>
+									{VIEWS.map(
+										(view): ReactElement => (
+											<DropdownItem
+												href="#"
+												isActive={view === viewAs}
+												key={`view-${view}`}
+												onClick={(): void => changeViewWrapper(view)}
+											>
+												{view}
+											</DropdownItem>
+										),
+									)}
+								</DropdownContent>
+							</DropdownMenu>
+						</Dropdown>
+					</div>
+					<div className={styles.toolbarItem}>
+						<Dropdown isActive={isSortActive}>
+							<DropdownTrigger>
+								<Button
+									aria-controls="dropdown-menu"
+									aria-haspopup="true"
+									isOutlined
+									onClick={(): void =>
+										setIsSortActive((isActive): boolean => !isActive)
+									}
+								>
+									<FontAwesomeIcon icon="sort" />
+									&nbsp;
+									<FontAwesomeIcon icon={['far', 'angle-down']} size="1x" />
+								</Button>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownContent>
+									<DropdownItem
 										href="#"
-										onClick={(): void => changeView(view)}
-										key={`view-${view}`}
+										isActive={sortCol === 'ordered'}
+										key="sort-ordered"
+										onClick={(): void => sortItems('ordered')}
 									>
-										{view === viewAs ? <b>{view}</b> : view}
-									</NavbarItem>
-								),
-							)}
-						</NavbarDropdown>
-					</NavbarItem>
-					<NavbarItem href="#" onClick={toggleFilters}>
-						<FontAwesomeIcon icon="search" />
-					</NavbarItem>
-					<NavbarItem hasDropdown isHoverable>
-						<NavbarLink href="#">
-							<FontAwesomeIcon icon="sort" />
-						</NavbarLink>
-						<NavbarDropdown>
-							<NavbarItem href="#" onClick={(): void => sortItems('ordered')}>
-								{displayCurrentSort('ordered')}
-								&nbsp;Order
-							</NavbarItem>
-							<NavbarItem href="#" onClick={(): void => sortItems('itemID')}>
-								{displayCurrentSort('itemID')}
-								&nbsp;ID
-							</NavbarItem>
-							<NavbarItem href="#" onClick={(): void => sortItems('itemName')}>
-								{displayCurrentSort('itemName')}
-								&nbsp;Title
-							</NavbarItem>
-						</NavbarDropdown>
-					</NavbarItem>
-				</NavbarEnd>
-			</NavbarMenu>
+										{displayCurrentSort('ordered')}
+										&nbsp;Order
+									</DropdownItem>
+									<DropdownItem
+										href="#"
+										isActive={sortCol === 'itemID'}
+										key="sort-itemID"
+										onClick={(): void => sortItems('itemID')}
+									>
+										{displayCurrentSort('itemID')}
+										&nbsp;ID
+									</DropdownItem>
+									<DropdownItem
+										href="#"
+										isActive={sortCol === 'itemName'}
+										key="sort-itemName"
+										onClick={(): void => sortItems('itemName')}
+									>
+										{displayCurrentSort('itemName')}
+										&nbsp;Title
+									</DropdownItem>
+								</DropdownContent>
+							</DropdownMenu>
+						</Dropdown>
+					</div>
+				</div>
+			</div>
 		</Navbar>
 	);
 };
