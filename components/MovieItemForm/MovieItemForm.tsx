@@ -12,7 +12,7 @@ import {
 	TextArea,
 } from 'bloomer';
 import { Formik, ErrorMessage, Form } from 'formik';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactText } from 'react';
 import * as Yup from 'yup';
 
 import {
@@ -29,7 +29,7 @@ import { convertGQLValueForDisplay } from '../../utils';
 import ButtonLink from '../ButtonLink/ButtonLink';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
 
-type CustomErrorProps = Record<string, never>;
+type CustomErrorProps = Record<string, ReactText[]>;
 
 const CustomError: FC<CustomErrorProps> = ({ children }): ReactElement => (
 	<Help isColor="danger">{children}</Help>
@@ -68,6 +68,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 }): ReactElement => (
 	<Formik
 		initialValues={movieItem}
+		// @ts-ignore
 		onSubmit={onAddSubmit || onUpdateSubmit || defaultSubmitHandler}
 		validationSchema={Yup.object().shape({
 			itemName: Yup.string().required('Please enter title'),
@@ -288,7 +289,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 							isColor={
 								errors.releaseDate && touched.releaseDate ? 'danger' : undefined
 							}
-							value={values.releaseDate}
+							value={values.releaseDate ?? ''}
 							type="date"
 							placeholder="Release Date"
 							onBlur={handleBlur}
