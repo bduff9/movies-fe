@@ -1,21 +1,31 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const withPWA = require('next-pwa');
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+module.exports = function (...args) {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	let original = require('./next.config.original.1604602588011.js');
+	const finalConfig = {};
+	const target = { target: 'serverless' };
 
-const { NODE_ENV } = process.env;
-const API_URL =
-	NODE_ENV === 'development'
-		? 'http://localhost:4000/local/graphql'
-		: 'https://pxpnoco1id.execute-api.us-east-1.amazonaws.com/prod/graphql';
+	if (
+		typeof original === 'function' &&
+		original.constructor.name === 'AsyncFunction'
+	) {
+		// AsyncFunctions will become promises
+		original = original(...args);
+	}
 
-module.exports = withPWA({
-	env: {
-		API_URL,
-	},
-	experimental: { scss: true },
-	pwa: {
-		dest: 'public',
-		maximumFileSizeToCacheInBytes: 3000000,
-	},
-});
+	if (original instanceof Promise) {
+		// Special case for promises, as it's currently not supported
+		// and will just error later on
+		return original
+			.then(originalConfig => Object.assign(finalConfig, originalConfig))
+			.then(config => Object.assign(config, target));
+	} else if (typeof original === 'function') {
+		Object.assign(finalConfig, original(...args));
+	} else if (typeof original === 'object') {
+		Object.assign(finalConfig, original);
+	}
+
+	Object.assign(finalConfig, target);
+
+	return finalConfig;
+};
