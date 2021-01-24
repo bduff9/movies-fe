@@ -23,9 +23,11 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 	whyDidYouRender(React);
 }
 
-const MoviesApp: FC<AppProps & {
-	apollo: ApolloClient<NormalizedCacheObject>;
-}> = ({ apollo, Component, pageProps }): JSX.Element => {
+const MoviesApp: FC<
+	AppProps & {
+		apollo: ApolloClient<NormalizedCacheObject>;
+	}
+> = ({ apollo, Component, pageProps }): JSX.Element => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 

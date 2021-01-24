@@ -24,7 +24,7 @@ import { ensureUnauthenticated } from '../utils/auth';
 
 import styles from './login.module.scss';
 
-type LoginProps = {};
+type LoginProps = Record<string, never>;
 
 const Login: NextPage<LoginProps> = (): ReactElement => {
 	const { forgotPassword, login } = useContext(AuthContext);

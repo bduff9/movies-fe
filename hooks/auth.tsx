@@ -54,10 +54,13 @@ interface IAuthFailure {
 }
 
 type AuthActions = IAuthFailure | IAuthSucceed;
+type AuthProviderProps = Record<string, never>;
 
 export const COOKIE_NAME = 'authentication';
 
-export const AuthProvider: FC<{}> = ({ children }): ReactElement => {
+export const AuthProvider: FC<AuthProviderProps> = ({
+	children,
+}): ReactElement => {
 	const initialState: IAuthContextState = {
 		isSignedIn: false,
 		loading: true,
@@ -134,12 +137,12 @@ export const AuthProvider: FC<{}> = ({ children }): ReactElement => {
 			let loggedUser: CognitoUser;
 			const code = '';
 
-			// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			switch (user.challengeName) {
 				case 'SMS_MFA':
 				case 'SOFTWARE_TOKEN_MFA':
-					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-ignore
 					loggedUser = await Auth.confirmSignIn(user, code, user.challengeName);
 
@@ -150,9 +153,7 @@ export const AuthProvider: FC<{}> = ({ children }): ReactElement => {
 				case 'NEW_PASSWORD_REQUIRED':
 					loggedUser = await Auth.completeNewPassword(user, password, {
 						email,
-						// eslint-disable-next-line @typescript-eslint/camelcase
 						family_name: 'Duffey',
-						// eslint-disable-next-line @typescript-eslint/camelcase
 						given_name: 'Brian',
 					});
 

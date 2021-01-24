@@ -8,7 +8,9 @@ describe('MovieItemsDetail', (): void => {
 	let wrapper: ShallowWrapper<any, any, any>;
 
 	beforeEach((): void => {
-		wrapper = shallow(<MovieItemsDetail loading movieItems={[]} />);
+		wrapper = shallow(
+			<MovieItemsDetail loading movieItems={[]} refetch={jest.fn()} />,
+		);
 	});
 
 	it('exists', (): void => {

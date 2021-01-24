@@ -5,7 +5,7 @@ import { AuthContext } from '../../hooks/auth';
 
 //import styles from './Unauthenticated.module.scss';
 
-type UnauthenticatedProps = {};
+type UnauthenticatedProps = Record<string, never>;
 
 const Unauthenticated: FC<UnauthenticatedProps> = ({
 	children,

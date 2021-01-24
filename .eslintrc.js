@@ -62,7 +62,7 @@ module.exports = {
 		'linebreak-style': 'off',
 		'no-console': 'off',
 		'no-constant-condition': 'off',
-		'no-unused-vars': [
+		'@typescript-eslint/no-unused-vars': [
 			'warn',
 			{
 				varsIgnorePattern: 'UU',
@@ -144,7 +144,7 @@ module.exports = {
 		'@typescript-eslint/indent': 'off',
 		'@typescript-eslint/prefer-interface': 'off',
 		'@typescript-eslint/interface-name-prefix': 'off',
-		'@typescript-eslint/ban-ts-ignore': 'warn',
+		'@typescript-eslint/ban-ts-comment': 'warn',
 		'@typescript-eslint/explicit-function-return-type': 'error',
 		'prefer-template': 'error',
 	},

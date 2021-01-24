@@ -1,6 +1,14 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
+import {
+	CaseType,
+	DigitalType,
+	FormatType,
+	StatusType,
+	YesNo,
+} from '../../graphql/output';
+
 import MovieItemForm from './MovieItemForm';
 
 describe('MovieItemForm', (): void => {
@@ -11,19 +19,18 @@ describe('MovieItemForm', (): void => {
 		wrapper = shallow(
 			<MovieItemForm
 				movieItem={{
-					caseType: 'Plain',
-					digitalType: 'UV',
-					formatType: 'Ultra HD',
-					id: 1,
-					is3D: 'N',
-					isWatched: 'N',
+					caseType: CaseType.Plain,
+					digitalType: DigitalType.Uv,
+					formatType: FormatType.UltraHd,
+					itemID: 1,
+					is3D: YesNo.N,
+					isWatched: YesNo.N,
 					itemName: '',
 					itemNotes: '',
-					itemStatus: 'Owned',
+					itemStatus: StatusType.Owned,
 					itemURL: '',
 					releaseDate: '1970-01-01',
 				}}
-				onSubmit={jest.fn()}
 			/>,
 		);
 	});

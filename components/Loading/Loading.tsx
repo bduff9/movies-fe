@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FC, ReactElement } from 'react';
 
-const Loading: FC<{}> = (): ReactElement => (
+type LoadingProps = Record<string, never>;
+
+const Loading: FC<LoadingProps> = (): ReactElement => (
 	<>
 		<FontAwesomeIcon icon="spinner" spin />
 		&nbsp; Loading...

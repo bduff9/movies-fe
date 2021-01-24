@@ -59,7 +59,7 @@ const Filters: FC<FiltersProps> = ({
 				break;
 			case 'releaseDateTo':
 				if (filter) {
-					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-ignore
 					filter.value2 = value;
 				} else {
@@ -258,7 +258,7 @@ const Filters: FC<FiltersProps> = ({
 							placeholder="Search on release date"
 							onChange={updateStateFromForm}
 							type="date"
-							// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 							//@ts-ignore
 							value={`${releaseDate?.value2 || ''}`}
 						/>

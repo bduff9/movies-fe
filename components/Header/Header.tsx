@@ -5,7 +5,7 @@ import { AuthContext } from '../../hooks/auth';
 
 import styles from './Header.module.scss';
 
-type HeaderProps = {};
+type HeaderProps = Record<string, never>;
 
 const Header: FC<HeaderProps> = (): ReactElement => {
 	const { isSignedIn, logout } = useContext(AuthContext);

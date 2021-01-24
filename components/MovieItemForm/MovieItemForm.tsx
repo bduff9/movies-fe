@@ -29,7 +29,7 @@ import { convertGQLValueForDisplay } from '../../utils';
 import ButtonLink from '../ButtonLink/ButtonLink';
 import MovieItemPlaceholder from '../MovieItemPlaceholder/MovieItemPlaceholder';
 
-type CustomErrorProps = {};
+type CustomErrorProps = Record<string, never>;
 
 const CustomError: FC<CustomErrorProps> = ({ children }): ReactElement => (
 	<Help isColor="danger">{children}</Help>
@@ -41,10 +41,13 @@ const defaultSubmitHandler = (): void => {
 
 type MovieItemFormProps = {
 	movieItem?: MovieItem;
-	onAddSubmit?: (movieItem: MutationAddMovieItemArgs, extra: object) => void;
+	onAddSubmit?: (
+		movieItem: MutationAddMovieItemArgs,
+		extra: Record<string, unknown>,
+	) => void;
 	onUpdateSubmit?: (
 		movieItem: MutationUpdateMovieItemArgs,
-		extra: object,
+		extra: Record<string, unknown>,
 	) => void;
 };
 
@@ -88,7 +91,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 				.test(
 					'releaseDate',
 					'Date must be a Tuesday',
-					(value: Date): boolean => value.getDay() === 2,
+					(value: Date | undefined): boolean => !!value && value.getDay() === 2,
 				),
 			isWatched: Yup.string()
 				.oneOf(Object.keys(YesNo))

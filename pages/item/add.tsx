@@ -53,7 +53,7 @@ const ADD_MOVIE_ITEM = gql`
 	}
 `;
 
-type AddMovieItemProps = {};
+type AddMovieItemProps = Record<string, never>;
 
 const AddMovieItem: NextPage<AddMovieItemProps> = (): ReactElement => {
 	const router = useRouter();
