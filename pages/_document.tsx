@@ -27,4 +27,5 @@ class MoviesDocument extends Document {
 	}
 }
 
+// ts-prune-ignore-next
 export default MoviesDocument;

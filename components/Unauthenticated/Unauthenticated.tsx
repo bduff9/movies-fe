@@ -5,11 +5,9 @@ import { AuthContext } from '../../hooks/auth';
 
 //import styles from './Unauthenticated.module.scss';
 
-type UnauthenticatedProps = Record<string, never>;
+//type UnauthenticatedProps = Record<string, never>;
 
-const Unauthenticated: FC<UnauthenticatedProps> = ({
-	children,
-}): JSX.Element => {
+const Unauthenticated: FC = ({ children }): JSX.Element => {
 	const { isSignedIn, loading } = useContext(AuthContext);
 	const router = useRouter();
 

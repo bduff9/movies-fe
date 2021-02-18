@@ -95,4 +95,5 @@ const MoviesApp: FC<
 	);
 };
 
+// ts-prune-ignore-next
 export default withData(MoviesApp);

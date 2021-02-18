@@ -90,7 +90,9 @@ const MovieItemGrid: FC<MovieItemGridProps> = ({
 						</span>
 					</MediaContent>
 				</Media>
-				<small>{getFormattedDate(movieItem.releaseDate)}</small>
+				<small>
+					{movieItem.releaseDate && getFormattedDate(movieItem.releaseDate)}
+				</small>
 			</CardContent>
 			<CardFooter style={{ height: 71 }}>
 				<CardFooterItem>

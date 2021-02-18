@@ -189,4 +189,5 @@ Login.getInitialProps = ({ req, res }: NextPageContext): LoginProps => {
 
 Login.whyDidYouRender = true;
 
+// ts-prune-ignore-next
 export default Login;

@@ -2,3 +2,4 @@
 .serverless/
 .serverless_nextjs/
 public/
+github-actions-reporter.js

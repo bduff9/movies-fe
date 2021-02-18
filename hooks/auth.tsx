@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 
 import { displayToastMessage } from '../utils/notifications';
 
-export interface IAuthContext {
+interface IAuthContext {
 	forgotPassword: (email: string) => Promise<string>;
 	isSignedIn: boolean;
 	loading: boolean;
@@ -54,13 +54,11 @@ interface IAuthFailure {
 }
 
 type AuthActions = IAuthFailure | IAuthSucceed;
-type AuthProviderProps = Record<string, never>;
+//type AuthProviderProps = Record<string, never>;
 
 export const COOKIE_NAME = 'authentication';
 
-export const AuthProvider: FC<AuthProviderProps> = ({
-	children,
-}): ReactElement => {
+export const AuthProvider: FC = ({ children }): ReactElement => {
 	const initialState: IAuthContextState = {
 		isSignedIn: false,
 		loading: true,
@@ -74,6 +72,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({
 	): IAuthContextState => {
 		switch (action.type) {
 			case AuthActionType.AUTH_ERROR:
+			case AuthActionType.UNAUTH_SUCCESS:
 				return { ...state, isSignedIn: false, loading: false, user: null };
 			case AuthActionType.AUTH_SUCCESS:
 				return {
@@ -82,8 +81,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({
 					loading: false,
 					user: action.payload,
 				};
-			case AuthActionType.UNAUTH_SUCCESS:
-				return { ...state, isSignedIn: false, loading: false, user: null };
 			default:
 				return state;
 		}

@@ -1,5 +1,7 @@
+// ts-prune-ignore-next
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
+// ts-prune-ignore-next
 export type Scalars = {
 	ID: string;
 	String: string;
@@ -21,6 +23,7 @@ export type Query = {
 	movies: Array<Movie>;
 };
 
+// ts-prune-ignore-next
 export type QueryCountMovieItemsArgs = {
 	itemName?: Maybe<StringFilterInput>;
 	caseType?: Maybe<CaseTypeFilterInput>;
@@ -32,6 +35,7 @@ export type QueryCountMovieItemsArgs = {
 	releaseDate?: Maybe<DateFilterInput>;
 };
 
+// ts-prune-ignore-next
 export type QueryMovieItemsArgs = {
 	itemName?: Maybe<StringFilterInput>;
 	caseType?: Maybe<CaseTypeFilterInput>;
@@ -50,10 +54,12 @@ export type QueryMovieItemArgs = {
 	itemID: Scalars['Int'];
 };
 
+// ts-prune-ignore-next
 export type QueryMoviesArgs = {
 	itemID: Scalars['Int'];
 };
 
+// ts-prune-ignore-next
 export type StringFilterInput = {
 	relation: FilterType;
 	value: Scalars['String'];
@@ -69,6 +75,7 @@ export enum FilterType {
 	StartsWith = 'startsWith',
 }
 
+// ts-prune-ignore-next
 export type CaseTypeFilterInput = {
 	relation: FilterType;
 	value: CaseType;
@@ -84,6 +91,7 @@ export enum CaseType {
 	Steelbook = 'Steelbook',
 }
 
+// ts-prune-ignore-next
 export type DigitalTypeFilterInput = {
 	relation: FilterType;
 	value: DigitalType;
@@ -98,6 +106,7 @@ export enum DigitalType {
 	Uv = 'UV',
 }
 
+// ts-prune-ignore-next
 export type YesNoFilterInput = {
 	relation: FilterType;
 	value: YesNo;
@@ -110,6 +119,7 @@ export enum YesNo {
 	Y = 'Y',
 }
 
+// ts-prune-ignore-next
 export type FormatTypeFilterInput = {
 	relation: FilterType;
 	value: FormatType;
@@ -125,6 +135,7 @@ export enum FormatType {
 	UltraHd = 'UltraHD',
 }
 
+// ts-prune-ignore-next
 export type StatusTypeFilterInput = {
 	relation: FilterType;
 	value: StatusType;
@@ -139,6 +150,7 @@ export enum StatusType {
 	Wanted = 'Wanted',
 }
 
+// ts-prune-ignore-next
 export type DateFilterInput = {
 	relation: FilterType;
 	value: Scalars['DateTime'];
@@ -161,12 +173,14 @@ export type MovieItem = {
 	itemNotes?: Maybe<Scalars['String']>;
 };
 
+// ts-prune-ignore-next
 export type OrderBy = {
 	field: Scalars['String'];
 	direction: OrderType;
 };
 
 /** The order direction */
+// ts-prune-ignore-next
 export enum OrderType {
 	Asc = 'ASC',
 	Desc = 'DESC',
@@ -180,6 +194,7 @@ export type Movie = {
 	movieURL?: Maybe<Scalars['String']>;
 };
 
+// ts-prune-ignore-next
 export type Mutation = {
 	__typename?: 'Mutation';
 	addMovieItem: MovieItem;
@@ -221,12 +236,14 @@ export type MutationUpdateMovieItemArgs = {
 	itemID: Scalars['Int'];
 };
 
+// ts-prune-ignore-next
 export type MutationAddMovieArgs = {
 	itemID: Scalars['Int'];
 	movieTitle: Scalars['String'];
 	movieURL: Scalars['String'];
 };
 
+// ts-prune-ignore-next
 export type MutationUpdateMovieArgs = {
 	itemID?: Maybe<Scalars['Int']>;
 	movieTitle?: Maybe<Scalars['String']>;
@@ -234,6 +251,7 @@ export type MutationUpdateMovieArgs = {
 	movieID: Scalars['Int'];
 };
 
+// ts-prune-ignore-next
 export interface IntrospectionResultData {
 	__schema: {
 		types: {
@@ -250,4 +268,5 @@ const result: IntrospectionResultData = {
 		types: [],
 	},
 };
+// ts-prune-ignore-next
 export default result;

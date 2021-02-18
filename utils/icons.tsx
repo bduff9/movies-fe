@@ -1,5 +1,3 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faMoneyBillAlt as farMoneyBillAlt } from '@fortawesome/free-regular-svg-icons';
 import {
 	faAngleDown as farAngleDown,
 	faBook as farBook,
@@ -12,7 +10,7 @@ import {
 	faSort as farSort,
 	faSquare as farSquare,
 	faTable as farTable,
-} from '@fortawesome/pro-regular-svg-icons';
+} from '@bduff9/pro-regular-svg-icons';
 import {
 	faBook,
 	faBox,
@@ -31,7 +29,9 @@ import {
 	faSquare,
 	faThLarge,
 	faTruck,
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@bduff9/pro-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faMoneyBillAlt as farMoneyBillAlt } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 

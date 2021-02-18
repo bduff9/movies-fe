@@ -104,4 +104,5 @@ AddMovieItem.getInitialProps = ({
 
 AddMovieItem.whyDidYouRender = true;
 
+// ts-prune-ignore-next
 export default AddMovieItem;

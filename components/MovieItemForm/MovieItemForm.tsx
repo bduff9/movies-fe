@@ -68,6 +68,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 }): ReactElement => (
 	<Formik
 		initialValues={movieItem}
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		onSubmit={onAddSubmit || onUpdateSubmit || defaultSubmitHandler}
 		validationSchema={Yup.object().shape({

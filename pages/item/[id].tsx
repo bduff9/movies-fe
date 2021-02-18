@@ -183,4 +183,5 @@ EditMovieItem.getInitialProps = ({
 
 EditMovieItem.whyDidYouRender = true;
 
+// ts-prune-ignore-next
 export default EditMovieItem;

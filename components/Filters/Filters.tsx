@@ -18,7 +18,7 @@ import {
 } from '../../graphql/output';
 import { TFilterFilters, TFilterType } from '../../utils/types';
 
-export interface FiltersProps {
+interface FiltersProps {
 	filters: TFilterFilters;
 	updateFilters: (filters: TFilterFilters) => void;
 }

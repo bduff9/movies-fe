@@ -13,7 +13,7 @@ import Cookies from 'universal-cookie';
 
 import { COOKIE_NAME } from '../hooks/auth';
 
-const GRAPHQL_URL = process.env.API_URL;
+const GRAPHQL_URL = process.env.NEXT_PUBLIC_API_URL;
 const cookies = new Cookies();
 const isBrowser = !!process.browser;
 

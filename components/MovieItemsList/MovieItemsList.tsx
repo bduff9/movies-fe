@@ -47,7 +47,9 @@ const MovieItemList: FC<MovieItemDetailProps> = ({
 				<Content>
 					<p>
 						<strong>{movieItem.itemName}</strong>
-						<small>{getFormattedDate(movieItem.releaseDate)}</small>
+						<small>
+							{movieItem.releaseDate && getFormattedDate(movieItem.releaseDate)}
+						</small>
 						<br />
 						<Image
 							isSize="48x48"

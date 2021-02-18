@@ -133,4 +133,5 @@ Home.getInitialProps = ({ req, res }: NextPageContext): HomeProps => {
 
 Home.whyDidYouRender = true;
 
+// ts-prune-ignore-next
 export default Home;

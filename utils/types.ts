@@ -34,7 +34,7 @@ export type TSavedView = {
 
 export type TSortCol = 'itemID' | 'itemName' | 'ordered';
 
-export type TSortDir = 'ASC' | 'DESC';
+type TSortDir = 'ASC' | 'DESC';
 
 export type TSort = {
 	direction: TSortDir;
