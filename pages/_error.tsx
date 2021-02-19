@@ -24,7 +24,7 @@ const Error: NextPage<ErrorProps> = ({
 	return <NextErrorComponent statusCode={statusCode} />;
 };
 
-Error.getInitialProps = async ({ res, err, asPath }) => {
+Error.getInitialProps = async ({ res, err, asPath }): Promise<ErrorProps> => {
 	const errorInitialProps = await NextErrorComponent.getInitialProps({
 		res,
 		err,

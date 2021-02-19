@@ -140,7 +140,7 @@
     "hooks": {
       "post-merge": "npm run setup",
       "pre-commit": "lint-staged && npm run env",
-      "pre-push": "npm run test"
+      "pre-push": "npm run validate && npm run test:ci"
     }
   },
   "jest": {
