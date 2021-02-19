@@ -49,7 +49,7 @@
     "@bduff9/pro-regular-svg-icons": "5.15.2",
     "@bduff9/pro-solid-svg-icons": "5.15.2",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@sentry/browser": "6.1.0",
+    "@sentry/browser": "6.2.0",
     "@zeit/next-css": "1.0.1",
     "apollo-boost": "0.4.9",
     "apollo-cache-inmemory": "1.6.6",
