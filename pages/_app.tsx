@@ -1,5 +1,6 @@
 import { ApolloProvider } from '@apollo/react-hooks';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import * as Sentry from '@sentry/browser';
 import whyDidYouRender from '@welldone-software/why-did-you-render';
 import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
@@ -23,11 +24,21 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 	whyDidYouRender(React);
 }
 
+if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+	Sentry.init({
+		enabled: process.env.NODE_ENV === 'production',
+		dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+	});
+}
+
+type SentryProps = { err: unknown };
+
 const MoviesApp: FC<
-	AppProps & {
-		apollo: ApolloClient<NormalizedCacheObject>;
-	}
-> = ({ apollo, Component, pageProps }): JSX.Element => {
+	AppProps &
+		SentryProps & {
+			apollo: ApolloClient<NormalizedCacheObject>;
+		}
+> = ({ apollo, Component, err, pageProps }): JSX.Element => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -88,7 +99,7 @@ const MoviesApp: FC<
 			</Head>
 			<ApolloProvider client={apollo}>
 				<Layout isLoading={isLoading}>
-					<Component {...pageProps} />
+					<Component {...pageProps} err={err} />
 				</Layout>
 			</ApolloProvider>
 		</AuthProvider>
