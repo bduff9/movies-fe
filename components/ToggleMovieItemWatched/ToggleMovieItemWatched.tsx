@@ -1,6 +1,5 @@
-import { useMutation } from '@apollo/react-hooks';
+import { ApolloQueryResult, useMutation } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ApolloQueryResult } from 'apollo-boost';
 import { CardFooterItem } from 'bloomer';
 import gql from 'graphql-tag';
 import React, { FC, memo, ReactElement, useEffect, useState } from 'react';

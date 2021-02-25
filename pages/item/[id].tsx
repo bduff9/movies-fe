@@ -1,8 +1,9 @@
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Column, Columns, Container } from 'bloomer';
 import gql from 'graphql-tag';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/client';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
@@ -16,7 +17,6 @@ import {
 	MovieItem,
 	QueryMovieItemArgs,
 } from '../../graphql/output';
-import { ensureAuthenticated } from '../../utils/auth';
 
 const MOVIE_ITEM_BY_ID = gql`
 	query MovieItemToEdit($itemID: Int!) {
@@ -156,13 +156,16 @@ const EditMovieItem: NextPage<EditMovieItemProps> = ({ id }): ReactElement => {
 	);
 };
 
-EditMovieItem.getInitialProps = ({
-	query,
-	req,
-	res,
-}: NextPageContext): EditMovieItemProps => {
-	if (req && res) {
-		ensureAuthenticated(req, res);
+// ts-prune-ignore-next
+export const getServerSideProps: GetServerSideProps<EditMovieItemProps> = async context => {
+	const session = await getSession(context);
+	const { query, res } = context;
+
+	if (!session) {
+		res.writeHead(302, { Location: '/auth/login' });
+		res.end();
+
+		return { props: {} as EditMovieItemProps };
 	}
 
 	const { id } = query;
@@ -173,11 +176,11 @@ EditMovieItem.getInitialProps = ({
 		});
 		res?.end();
 
-		return { id: 'MISSING' };
+		return { props: {} as EditMovieItemProps };
 	}
 
 	return {
-		id,
+		props: { id },
 	};
 };
 

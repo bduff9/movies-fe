@@ -1,4 +1,4 @@
-import { ApolloQueryResult } from 'apollo-boost';
+import { ApolloQueryResult } from '@apollo/client';
 import {
 	Card,
 	CardContent,
@@ -33,7 +33,7 @@ import styles from './MovieItemsGrid.module.scss';
 type MovieItemGridProps = {
 	movieItem: MovieItem;
 	refetch: (
-		variables?: QueryMovieItemsArgs | undefined,
+		variables?: Partial<QueryMovieItemsArgs> | undefined,
 	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
 };
 

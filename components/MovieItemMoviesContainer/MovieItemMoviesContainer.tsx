@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { Button, Column, Heading } from 'bloomer';
 import gql from 'graphql-tag';
 import React, { FC, ReactElement } from 'react';

@@ -1,36 +1,31 @@
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import { persistCacheSync } from 'apollo-cache-persist-dev';
 import {
-	PersistentStorage,
-	PersistedData,
-} from 'apollo-cache-persist-dev/types';
-import { ApolloClient } from 'apollo-client';
-import { setContext } from 'apollo-link-context';
-import { createHttpLink } from 'apollo-link-http';
+	ApolloClient,
+	InMemoryCache,
+	NormalizedCacheObject,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { createHttpLink } from '@apollo/client/link/http';
+import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 import fetch from 'isomorphic-unfetch';
 import withApollo from 'next-with-apollo';
-import Cookies from 'universal-cookie';
-
-import { COOKIE_NAME } from '../hooks/auth';
 
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_API_URL;
-const cookies = new Cookies();
 const isBrowser = !!process.browser;
 
 if (!isBrowser) global.fetch = fetch;
 
-const authLink = setContext((_, { headers }): unknown => {
-	const token = cookies.get(COOKIE_NAME);
-
-	return {
-		headers: {
-			...headers,
-			authorization: token || '',
-		},
-	};
-});
+const authLink = setContext(
+	async (_, { headers }): Promise<unknown> => {
+		return {
+			headers: {
+				...headers,
+			},
+		};
+	},
+);
 
 const httpLink = createHttpLink({
+	credentials: 'include',
 	fetch,
 	uri: GRAPHQL_URL,
 });
@@ -38,22 +33,13 @@ const httpLink = createHttpLink({
 const link = authLink.concat(httpLink);
 
 export default withApollo(
-	({ initialState }): ApolloClient<NormalizedCacheObject> => {
-		const cache = new InMemoryCache({
-			cacheRedirects: {
-				Query: {
-					movieItem: (_, args, { getCacheKey }): unknown =>
-						getCacheKey({ __typename: 'MovieItem', itemID: args.itemID }),
-				},
-			},
-		}).restore(initialState || {});
+	async ({ initialState }): Promise<ApolloClient<NormalizedCacheObject>> => {
+		const cache = new InMemoryCache().restore(initialState || {});
 
 		if (typeof window !== 'undefined') {
-			persistCacheSync({
+			await persistCache({
 				cache,
-				storage: window.localStorage as PersistentStorage<
-					PersistedData<NormalizedCacheObject>
-				>,
+				storage: new LocalStorageWrapper(window.localStorage),
 			});
 		}
 

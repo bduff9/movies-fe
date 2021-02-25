@@ -1,14 +1,13 @@
 import { Hero, HeroHeader, Navbar, NavbarBrand, NavbarItem } from 'bloomer';
-import React, { FC, ReactElement, useContext } from 'react';
-
-import { AuthContext } from '../../hooks/auth';
+import { signOut, useSession } from 'next-auth/client';
+import React, { FC, ReactElement } from 'react';
 
 import styles from './Header.module.scss';
 
 type HeaderProps = Record<string, never>;
 
 const Header: FC<HeaderProps> = (): ReactElement => {
-	const { isSignedIn, logout } = useContext(AuthContext);
+	const [session] = useSession();
 
 	return (
 		<Hero>
@@ -16,8 +15,8 @@ const Header: FC<HeaderProps> = (): ReactElement => {
 				<Navbar>
 					<NavbarBrand className={styles.navbarBrand}>
 						<NavbarItem className={styles.expandItem}>Media Tracker</NavbarItem>
-						{isSignedIn && (
-							<NavbarItem href="#" onClick={logout}>
+						{!!session && (
+							<NavbarItem href="#" onClick={(): Promise<void> => signOut()}>
 								Log out
 							</NavbarItem>
 						)}

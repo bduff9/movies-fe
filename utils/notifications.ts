@@ -1,6 +1,7 @@
 import { ReactText } from 'react';
 import { toast, ToastOptions } from 'react-toastify';
 
+// ts-prune-ignore-next
 export const displayToastMessage = (
 	messageContent: string,
 	opts: ToastOptions = {

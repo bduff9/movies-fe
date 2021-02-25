@@ -1,20 +1,19 @@
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
-import React, { FC, useContext } from 'react';
-
-import { AuthContext } from '../../hooks/auth';
+import React, { FC } from 'react';
 
 //import styles from './Authenticated.module.scss';
 
 //type AuthenticatedProps = Record<string, never>;
 
 const Authenticated: FC = ({ children }): JSX.Element => {
-	const { isSignedIn, loading } = useContext(AuthContext);
+	const [session, loading] = useSession();
 	const router = useRouter();
 
 	if (loading) return <div>Loading...</div>;
 
-	if (!isSignedIn) {
-		router.push('/login');
+	if (!session) {
+		router.push('/auth/login');
 
 		return <></>;
 	}

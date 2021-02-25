@@ -1,7 +1,8 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { Column, Columns, Container } from 'bloomer';
 import gql from 'graphql-tag';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/client';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
@@ -9,7 +10,6 @@ import React, { ReactElement } from 'react';
 import Authenticated from '../../components/Authenticated/Authenticated';
 import MovieItemForm from '../../components/MovieItemForm/MovieItemForm';
 import { MutationAddMovieItemArgs, MovieItem } from '../../graphql/output';
-import { ensureAuthenticated } from '../../utils/auth';
 
 const ADD_MOVIE_ITEM = gql`
 	mutation AddMovieItem(
@@ -91,15 +91,17 @@ const AddMovieItem: NextPage<AddMovieItemProps> = (): ReactElement => {
 	);
 };
 
-AddMovieItem.getInitialProps = ({
-	req,
-	res,
-}: NextPageContext): AddMovieItemProps => {
-	if (req && res) {
-		ensureAuthenticated(req, res);
+// ts-prune-ignore-next
+export const getServerSideProps: GetServerSideProps = async context => {
+	const session = await getSession(context);
+	const { res } = context;
+
+	if (!session) {
+		res.writeHead(302, { Location: '/auth/login' });
+		res.end();
 	}
 
-	return {};
+	return { props: {} };
 };
 
 AddMovieItem.whyDidYouRender = true;

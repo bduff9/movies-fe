@@ -1,4 +1,4 @@
-import { ApolloQueryResult } from 'apollo-boost';
+import { ApolloQueryResult } from '@apollo/client';
 import {
 	Card,
 	CardContent,

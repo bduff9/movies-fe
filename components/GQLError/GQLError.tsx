@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-boost';
+import { ApolloError } from '@apollo/client';
 import React, { FC, ReactElement } from 'react';
 
 interface GQLErrorProps {

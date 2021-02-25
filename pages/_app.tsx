@@ -1,20 +1,21 @@
-import { ApolloProvider } from '@apollo/react-hooks';
+import {
+	ApolloClient,
+	ApolloProvider,
+	NormalizedCacheObject,
+} from '@apollo/client';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import * as Sentry from '@sentry/browser';
 import whyDidYouRender from '@welldone-software/why-did-you-render';
-import { NormalizedCacheObject } from 'apollo-cache-inmemory';
-import ApolloClient from 'apollo-client';
+import { Provider } from 'next-auth/client';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, FC } from 'react';
 
 import Layout from '../components/Layout/Layout';
-import { AuthProvider } from '../hooks/auth';
 import withData from '../utils/apollo-client';
 
 import '../styles.scss';
-import '../utils/aws-exports';
 import '../utils/icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
@@ -71,7 +72,7 @@ const MoviesApp: FC<
 	}, []);
 
 	return (
-		<AuthProvider>
+		<Provider session={pageProps.session}>
 			<Head>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -102,7 +103,7 @@ const MoviesApp: FC<
 					<Component {...pageProps} err={err} />
 				</Layout>
 			</ApolloProvider>
-		</AuthProvider>
+		</Provider>
 	);
 };
 

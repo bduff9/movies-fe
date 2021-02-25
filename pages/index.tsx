@@ -1,11 +1,11 @@
 import { Container } from 'bloomer';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/client';
 import Head from 'next/head';
 import React, { ReactElement, useEffect, useState } from 'react';
 
 import Authenticated from '../components/Authenticated/Authenticated';
 import MovieItemsContainer from '../components/MovieItemsContainer/MovieItemsContainer';
-import { ensureAuthenticated } from '../utils/auth';
 import { TFilterFilters, TSort, TSortCol, TViewAs } from '../utils/types';
 
 type HomeProps = {
@@ -103,9 +103,16 @@ const Home: NextPage<HomeProps> = (props): ReactElement => {
 	);
 };
 
-Home.getInitialProps = ({ req, res }: NextPageContext): HomeProps => {
-	if (req && res) {
-		ensureAuthenticated(req, res);
+// ts-prune-ignore-next
+export const getServerSideProps: GetServerSideProps<HomeProps> = async context => {
+	const session = await getSession(context);
+	const { res } = context;
+
+	if (!session) {
+		res.writeHead(302, { Location: '/auth/login' });
+		res.end();
+
+		return { props: {} as HomeProps };
 	}
 
 	let initialState: HomeProps;
@@ -128,7 +135,7 @@ Home.getInitialProps = ({ req, res }: NextPageContext): HomeProps => {
 		};
 	}
 
-	return initialState;
+	return { props: initialState };
 };
 
 Home.whyDidYouRender = true;
