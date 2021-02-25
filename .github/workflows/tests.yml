@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: "14.15.4"
       - name: Use .npmrc
-        uses: bduff9/use-npmrc@v1
+        uses: bduff9/use-npmrc@v1.1
         with:
           dot-npmrc: ${{ secrets.DOT_NPMRC }}
       - name: Install dependencies
