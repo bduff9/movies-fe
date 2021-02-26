@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState, FC } from 'react';
 
 import Layout from '../components/Layout/Layout';
-import withData from '../utils/apollo-client';
+import { getApolloClient } from '../utils/apollo-client';
 
 import '../styles.scss';
 import '../utils/icons';
@@ -34,14 +34,24 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
 
 type SentryProps = { err: unknown };
 
-const MoviesApp: FC<
-	AppProps &
-		SentryProps & {
-			apollo: ApolloClient<NormalizedCacheObject>;
-		}
-> = ({ apollo, Component, err, pageProps }): JSX.Element => {
+const MoviesApp: FC<AppProps & SentryProps> = ({
+	Component,
+	err,
+	pageProps,
+}): JSX.Element => {
 	const router = useRouter();
+	const [client, setClient] = useState<ApolloClient<NormalizedCacheObject>>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	useEffect((): void => {
+		const initApollo = async (): Promise<void> => {
+			const apolloClient = await getApolloClient();
+
+			setClient(apolloClient);
+		};
+
+		initApollo().catch(console.error);
+	}, []);
 
 	useEffect((): (() => void) => {
 		let mounted = true;
@@ -71,6 +81,10 @@ const MoviesApp: FC<
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	if (!client) {
+		return <h2>Initializing app...</h2>;
+	}
+
 	return (
 		<Provider session={pageProps.session}>
 			<Head>
@@ -98,7 +112,7 @@ const MoviesApp: FC<
 				<link rel="apple-touch-icon" href="/apple-icon.png"></link>
 				<meta name="theme-color" content="#53b3ea" />
 			</Head>
-			<ApolloProvider client={apollo}>
+			<ApolloProvider client={client}>
 				<Layout isLoading={isLoading}>
 					<Component {...pageProps} err={err} />
 				</Layout>
@@ -108,4 +122,4 @@ const MoviesApp: FC<
 };
 
 // ts-prune-ignore-next
-export default withData(MoviesApp);
+export default MoviesApp;

@@ -7,47 +7,50 @@ import { setContext } from '@apollo/client/link/context';
 import { createHttpLink } from '@apollo/client/link/http';
 import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 import fetch from 'isomorphic-unfetch';
-import withApollo from 'next-with-apollo';
+// import withApollo from 'next-with-apollo';
 
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_API_URL;
 const isBrowser = !!process.browser;
 
 if (!isBrowser) global.fetch = fetch;
 
-const authLink = setContext(
-	async (_, { headers }): Promise<unknown> => {
-		return {
-			headers: {
-				...headers,
-			},
-		};
-	},
-);
+export const getApolloClient = async (): Promise<
+	ApolloClient<NormalizedCacheObject>
+> => {
+	const authLink = setContext(
+		async (_, { headers }): Promise<unknown> => {
+			return {
+				headers: {
+					...headers,
+				},
+			};
+		},
+	);
 
-const httpLink = createHttpLink({
-	credentials: 'include',
-	fetch,
-	uri: GRAPHQL_URL,
-});
+	const httpLink = createHttpLink({
+		credentials: 'include',
+		fetch,
+		uri: GRAPHQL_URL,
+	});
 
-const link = authLink.concat(httpLink);
+	const link = authLink.concat(httpLink);
+	const cache = new InMemoryCache(); // .restore(initialState || {});
 
-export default withApollo(
-	async ({ initialState }): Promise<ApolloClient<NormalizedCacheObject>> => {
-		const cache = new InMemoryCache().restore(initialState || {});
+	// if (typeof window !== 'undefined') {
+	await persistCache({
+		cache,
+		storage: new LocalStorageWrapper(window.localStorage),
+	});
+	// }
 
-		if (typeof window !== 'undefined') {
-			await persistCache({
-				cache,
-				storage: new LocalStorageWrapper(window.localStorage),
-			});
-		}
+	return new ApolloClient({
+		cache,
+		connectToDevTools: isBrowser,
+		link,
+		ssrMode: !isBrowser,
+	});
+};
 
-		return new ApolloClient({
-			cache,
-			connectToDevTools: isBrowser,
-			link,
-			ssrMode: !isBrowser,
-		});
-	},
-);
+// export default withApollo(
+// 	async ({ initialState }): Promise<ApolloClient<NormalizedCacheObject>> => {},
+// );
