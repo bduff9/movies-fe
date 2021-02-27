@@ -5,6 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/bduff9/movies-fe/badge)](https://www.codefactor.io/repository/github/bduff9/movies-fe)
 [![Coverage Status](https://coveralls.io/repos/github/bduff9/movies-fe/badge.svg?branch=main)](https://coveralls.io/github/bduff9/movies-fe?branch=main)
 [![Known Vulnerabilities](https://snyk.io/test/github/bduff9/movies-fe/badge.svg)](https://snyk.io/test/github/bduff9/movies-fe)
+[![deepcode](https://www.deepcode.ai/api/gh/badge?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF0Zm9ybTEiOiJnaCIsIm93bmVyMSI6ImJkdWZmOSIsInJlcG8xIjoibW92aWVzLWZlIiwiaW5jbHVkZUxpbnQiOmZhbHNlLCJhdXRob3JJZCI6MjY1MTIsImlhdCI6MTYxNDM5NjA4OH0.df6FwQcr6jzElp5W5vrhV-MweFDWejm8PVgLzyHuYZ8)](https://www.deepcode.ai/app/gh/bduff9/movies-fe/_/dashboard?utm_content=gh%2Fbduff9%2Fmovies-fe)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
