@@ -21,7 +21,10 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 
 config.autoAddCss = false;
 
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+if (
+	typeof window !== 'undefined' &&
+	process.env.NEXT_PUBLIC_ENV !== 'production'
+) {
 	whyDidYouRender(React);
 }
 

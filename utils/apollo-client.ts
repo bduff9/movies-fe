@@ -7,7 +7,6 @@ import { setContext } from '@apollo/client/link/context';
 import { createHttpLink } from '@apollo/client/link/http';
 import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 import fetch from 'isomorphic-unfetch';
-// import withApollo from 'next-with-apollo';
 
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_API_URL;
 const isBrowser = !!process.browser;
@@ -34,14 +33,12 @@ export const getApolloClient = async (): Promise<
 	});
 
 	const link = authLink.concat(httpLink);
-	const cache = new InMemoryCache(); // .restore(initialState || {});
+	const cache = new InMemoryCache();
 
-	// if (typeof window !== 'undefined') {
 	await persistCache({
 		cache,
 		storage: new LocalStorageWrapper(window.localStorage),
 	});
-	// }
 
 	return new ApolloClient({
 		cache,
@@ -50,7 +47,3 @@ export const getApolloClient = async (): Promise<
 		ssrMode: !isBrowser,
 	});
 };
-
-// export default withApollo(
-// 	async ({ initialState }): Promise<ApolloClient<NormalizedCacheObject>> => {},
-// );
