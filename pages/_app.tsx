@@ -14,6 +14,7 @@ import React, { useEffect, useState, FC } from 'react';
 
 import Layout from '../components/Layout/Layout';
 import { getApolloClient } from '../utils/apollo-client';
+import { NEXT_PUBLIC_ENV, NEXT_PUBLIC_SENTRY_DSN } from '../utils/constants';
 
 import '../styles.scss';
 import '../utils/icons';
@@ -21,17 +22,14 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 
 config.autoAddCss = false;
 
-if (
-	typeof window !== 'undefined' &&
-	process.env.NEXT_PUBLIC_ENV !== 'production'
-) {
+if (typeof window !== 'undefined' && NEXT_PUBLIC_ENV !== 'production') {
 	whyDidYouRender(React);
 }
 
-if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+if (NEXT_PUBLIC_SENTRY_DSN) {
 	Sentry.init({
-		enabled: process.env.NODE_ENV === 'production',
-		dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+		enabled: NEXT_PUBLIC_ENV !== 'development',
+		dsn: NEXT_PUBLIC_SENTRY_DSN,
 	});
 }
 

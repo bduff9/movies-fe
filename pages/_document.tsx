@@ -1,31 +1,81 @@
-import {
-	DocumentInitialProps,
-	RenderPageResult,
-} from 'next/dist/next-server/lib/utils';
-import Document, { DocumentContext } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import React from 'react';
 
-//FIXME: FOUC here, have example on material but unsure for font awesome and bulma:
+import { NEXT_PUBLIC_ENV, NEXT_PUBLIC_SITE_URL } from '../utils/constants';
 
-class MoviesDocument extends Document {
-	static async getInitialProps (
-		ctx: DocumentContext,
-	): Promise<DocumentInitialProps> {
-		const originalRenderPage = ctx.renderPage;
+const appTitle = 'Movie Tracker';
+const appDescription = 'A movie tracker application';
+const appColor = '#2fa4e7';
+const safariTabColor = '#000';
+const siteName = 'A Site With No Name';
+const ogImage = `https://asitewithnoname.com/img/apps/movies.png`;
+const twitterAccount = '@Duffmaster33';
 
-		ctx.renderPage = (): RenderPageResult | Promise<RenderPageResult> =>
-			originalRenderPage({
-				// useful for wrapping the whole react tree
-				enhanceApp: App => App,
-				// useful for wrapping in a per-page basis
-				enhanceComponent: Component => Component,
-			});
-
-		// Run the parent `getInitialProps`, it now includes the custom `renderPage`
-		const initialProps = await Document.getInitialProps(ctx);
-
-		return initialProps;
+class MyDocument extends Document {
+	render (): JSX.Element {
+		return (
+			<Html lang="en">
+				<Head>
+					<meta charSet="utf-8" />
+					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+					<meta name="application-name" content={appTitle} />
+					<meta name="apple-mobile-web-app-capable" content="yes" />
+					<meta
+						name="apple-mobile-web-app-status-bar-style"
+						content="default"
+					/>
+					<meta name="apple-mobile-web-app-title" content={appTitle} />
+					<meta name="description" content={appDescription} />
+					<meta name="format-detection" content="telephone=no" />
+					<meta name="mobile-web-app-capable" content="yes" />
+					<meta name="msapplication-config" content="/browserconfig.xml" />
+					<meta name="msapplication-TileColor" content={appColor} />
+					<meta name="msapplication-tap-highlight" content="no" />
+					<link
+						rel="mask-icon"
+						href="/safari-pinned-tab.svg"
+						color={safariTabColor}
+					/>
+					<meta name="twitter:card" content="summary" />
+					<meta name="twitter:url" content={NEXT_PUBLIC_SITE_URL} />
+					<meta name="twitter:title" content={appTitle} />
+					<meta name="twitter:description" content={appDescription} />
+					<meta name="twitter:image" content={ogImage} />
+					<meta name="twitter:creator" content={twitterAccount} />
+					<meta property="og:title" content={appTitle} />
+					<meta property="og:site_name" content={siteName} />
+					<meta property="og:url" content={`${NEXT_PUBLIC_SITE_URL}/`} />
+					<meta property="og:description" content={appDescription} />
+					<meta property="og:type" content="website" />
+					<meta property="og:image" content={ogImage} />
+					<link rel="manifest" href="/manifest.json" />
+					<meta property="theme-color" content={appColor} />
+					<link rel="apple-touch-icon" href="/icon-192x192.png" />
+					<meta name="apple-mobile-web-app-status-bar" content={appColor} />
+					{/*<!-- Cloudflare Web Analytics -->*/}
+					{NEXT_PUBLIC_ENV === 'production' ? (
+						<script
+							defer
+							src="https://static.cloudflareinsights.com/beacon.min.js"
+							data-cf-beacon='{"token": "330a3512492e41679e0a3edfc6eb7c46", "spa": true}'
+						></script>
+					) : NEXT_PUBLIC_ENV === 'preview' ? (
+						<script
+							defer
+							src="https://static.cloudflareinsights.com/beacon.min.js"
+							data-cf-beacon='{"token": "d7364f5535ad463f8c13ab36a26f5566", "spa": true}'
+						></script>
+					) : null}
+					{/*<!-- End Cloudflare Web Analytics -->*/}
+				</Head>
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
 	}
 }
 
 // ts-prune-ignore-next
-export default MoviesDocument;
+export default MyDocument;

@@ -8,7 +8,9 @@ import { createHttpLink } from '@apollo/client/link/http';
 import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 import fetch from 'isomorphic-unfetch';
 
-const GRAPHQL_URL = process.env.NEXT_PUBLIC_API_URL;
+import { NEXT_PUBLIC_API_URL } from './constants';
+
+const GRAPHQL_URL = NEXT_PUBLIC_API_URL;
 const isBrowser = !!process.browser;
 
 if (!isBrowser) global.fetch = fetch;
