@@ -85,7 +85,7 @@
     "@types/enzyme": "3.10.8",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/eslint": "7.2.7",
-    "@types/jest": "26.0.20",
+    "@types/jest": "26.0.22",
     "@types/mysql": "2.15.18",
     "@types/next-auth": "3.7.1",
     "@types/node": "14.14.35",
