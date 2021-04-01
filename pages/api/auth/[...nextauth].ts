@@ -1,8 +1,8 @@
 import { decode, encode } from 'jwt-simple';
 import { NextApiRequest, NextApiResponse } from 'next';
-import NextAuth, { InitOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 // eslint-disable-next-line import/no-unresolved
-import { SessionBase } from 'next-auth/_utils';
+import { WithAdditionalParams } from 'next-auth/_utils';
 import Adapters from 'next-auth/adapters';
 import Providers from 'next-auth/providers';
 
@@ -23,7 +23,7 @@ if (!EMAIL_PASSWORD) throw new Error('Missing email server password');
 
 if (!EMAIL_USERNAME) throw new Error('Missing email server username');
 
-const options: InitOptions = {
+const options: NextAuthOptions = {
 	adapter: Adapters.TypeORM.Adapter(
 		{
 			type: 'mysql',
@@ -34,34 +34,28 @@ const options: InitOptions = {
 		},
 	),
 	callbacks: {
-		async signIn (user, _account, _profile): Promise<boolean> {
+		async signIn (user, _account, _profile) {
 			// console.log('~~~signIn start~~~');
 			// console.log({ account, profile, user });
 			// console.log('~~~signIn end~~~');
 
 			return !!(user as { id: null | number }).id;
 		},
-		async redirect (_url, baseUrl): Promise<string> {
+		async redirect (_url, baseUrl) {
 			// console.log('~~~redirect start~~~');
 			// console.log({ baseUrl, url });
 			// console.log('~~~redirect end~~~');
 
 			return baseUrl;
 		},
-		async session (session, _user): Promise<SessionBase> {
+		async session (session, _user) {
 			// console.log('~~~session start~~~');
 			// console.log({ session, user });
 			// console.log('~~~session end~~~');
 
-			return session;
+			return session as WithAdditionalParams<Session>;
 		},
-		async jwt (
-			token,
-			_user,
-			_account,
-			_profile,
-			_isNewUser,
-		): Promise<Record<string, unknown>> {
+		async jwt (token, _user, _account, _profile, _isNewUser) {
 			// console.log('~~~jwt start~~~');
 			// console.log({ account, isNewUser, profile, token, user });
 			// console.log('~~~jwt end~~~');
@@ -70,39 +64,39 @@ const options: InitOptions = {
 		},
 	},
 	events: {
-		async signIn (_message): Promise<void> {
+		async signIn (_message) {
 			// console.log('~~~signIn event start~~~');
 			// console.log({ message });
 			// console.log('~~~signIn event end~~~');
 		},
-		async signOut (_message): Promise<void> {
+		async signOut (_message) {
 			// console.log('~~~signOut event start~~~');
 			// console.log({ message });
 			// console.log('~~~signOut event end~~~');
 		},
-		async createUser (_message): Promise<void> {
+		async createUser (_message) {
 			// console.log('~~~createUser event start~~~');
 			// console.log({ message });
 			// console.log('~~~createUser event end~~~');
 		},
-		async linkAccount (_message): Promise<void> {
+		async linkAccount (_message) {
 			// console.log('~~~linkAccount event start~~~');
 			// console.log({ message });
 			// console.log('~~~linkAccount event end~~~');
 		},
-		async session (_message): Promise<void> {
+		async session (_message) {
 			// console.log('~~~session event start~~~');
 			// console.log({ message });
 			// console.log('~~~session event end~~~');
 		},
-		async error (_message): Promise<void> {
+		async error (_message) {
 			// console.log('~~~error event start~~~');
 			// console.log({ message });
 			// console.log('~~~error event end~~~');
 		},
 	},
 	jwt: {
-		decode: async (options): Promise<Record<string, string>> => {
+		decode: async options => {
 			// console.log('~~~decode start~~~');
 			// console.log({ options });
 			// console.log('~~~decode end~~~');
@@ -113,7 +107,7 @@ const options: InitOptions = {
 
 			return decode(options.token, JWT_SECRET, false, 'HS256');
 		},
-		encode: async (options): Promise<string> => {
+		encode: async options => {
 			// console.log('~~~encode start~~~');
 			// console.log({ options });
 			// console.log('~~~encode end~~~');
@@ -145,5 +139,7 @@ const options: InitOptions = {
 };
 
 // ts-prune-ignore-next
-export default (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
-	NextAuth(req, res, options);
+export default async (
+	req: NextApiRequest,
+	res: NextApiResponse,
+): Promise<void> => NextAuth(req, res, options);
