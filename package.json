@@ -48,7 +48,7 @@
     "@bduff9/pro-regular-svg-icons": "5.15.2",
     "@bduff9/pro-solid-svg-icons": "5.15.2",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@sentry/browser": "6.2.2",
+    "@sentry/browser": "6.2.3",
     "@zeit/next-css": "1.0.1",
     "apollo3-cache-persist": "0.9.1",
     "bloomer": "0.6.5",
