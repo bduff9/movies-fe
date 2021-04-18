@@ -42,10 +42,9 @@
   "config": {},
   "dependencies": {
     "@apollo/client": "3.3.13",
-    "@bduff9/fontawesome-pro": "5.15.3",
-    "@bduff9/pro-light-svg-icons": "5.15.2",
-    "@bduff9/pro-regular-svg-icons": "5.15.2",
-    "@bduff9/pro-solid-svg-icons": "5.15.2",
+    "@bduff9/pro-light-svg-icons": "5.15.3",
+    "@bduff9/pro-regular-svg-icons": "5.15.3",
+    "@bduff9/pro-solid-svg-icons": "5.15.3",
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@fortawesome/free-brands-svg-icons": "5.15.3",
     "@fortawesome/free-regular-svg-icons": "5.15.3",
