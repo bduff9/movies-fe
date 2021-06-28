@@ -50,7 +50,7 @@
     "@fortawesome/free-brands-svg-icons": "5.15.3",
     "@fortawesome/free-regular-svg-icons": "5.15.3",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@sentry/browser": "6.2.5",
+    "@sentry/browser": "6.8.0",
     "@zeit/next-css": "1.0.1",
     "apollo3-cache-persist": "0.9.1",
     "bloomer": "0.6.5",
