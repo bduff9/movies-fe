@@ -33,6 +33,10 @@ export const getApolloClient = async (): Promise<ApolloClient<NormalizedCacheObj
 		async (_, { headers }): Promise<unknown> => {
 			const session = await getSession({});
 
+			if (!headers) {
+				headers = {} as HeadersInit;
+			}
+
 			if (session) {
 				headers.authorization = `Bearer ${session.accessToken}`;
 			}
