@@ -37,6 +37,8 @@ export const getApolloClient = async (): Promise<ApolloClient<NormalizedCacheObj
 				headers = {} as HeadersInit;
 			}
 
+			console.log('Session obj: ', session);
+
 			if (session) {
 				headers.authorization = `Bearer ${session.accessToken}`;
 			}
