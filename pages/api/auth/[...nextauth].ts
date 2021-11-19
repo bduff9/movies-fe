@@ -17,7 +17,7 @@ import { decode, encode } from 'jwt-simple';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 // eslint-disable-next-line import/no-unresolved
-import { WithAdditionalParams } from 'next-auth/_utils';
+// import { WithAdditionalParams } from 'next-auth/_utils';
 import Adapters from 'next-auth/adapters';
 import Providers from 'next-auth/providers';
 
@@ -68,7 +68,7 @@ const options: NextAuthOptions = {
 			// console.log({ session, user });
 			// console.log('~~~session end~~~');
 
-			return session as WithAdditionalParams<Session>;
+			return session as Session;
 		},
 		async jwt (token, _user, _account, _profile, _isNewUser) {
 			// console.log('~~~jwt start~~~');
@@ -116,7 +116,7 @@ const options: NextAuthOptions = {
 			// console.log({ options });
 			// console.log('~~~decode end~~~');
 
-			if (!options.token) return {};
+			if (!options?.token) return {};
 
 			if (!JWT_SECRET) throw new Error('Missing JWT secret');
 
@@ -129,11 +129,11 @@ const options: NextAuthOptions = {
 
 			if (!JWT_SECRET) throw new Error('Missing JWT secret');
 
-			return encode(options.token, JWT_SECRET, 'HS256');
+			return encode(options?.token, JWT_SECRET, 'HS256');
 		},
 	},
 	pages: {
-		newUser: null,
+		newUser: undefined,
 		signIn: '/auth/login',
 		signOut: '/auth/login',
 	},
@@ -154,7 +154,5 @@ const options: NextAuthOptions = {
 };
 
 // ts-prune-ignore-next
-export default async (
-	req: NextApiRequest,
-	res: NextApiResponse,
-): Promise<void> => NextAuth(req, res, options);
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
+	NextAuth(req, res, options);

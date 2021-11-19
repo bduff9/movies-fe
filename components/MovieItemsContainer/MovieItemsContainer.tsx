@@ -26,13 +26,7 @@ import {
 	StatusType,
 } from '../../graphql/output';
 import { ITEMS_PER_PAGE } from '../../utils/constants';
-import {
-	TFilterFilters,
-	TSort,
-	TViewAs,
-	TSortCol,
-	TFilterType,
-} from '../../utils/types';
+import { TFilterFilters, TSort, TViewAs, TSortCol, TFilterType } from '../../utils/types';
 import Filters from '../Filters/Filters';
 import MovieItemsDetail from '../MovieItemsDetail/MovieItemsDetail';
 import MovieItemsGrid from '../MovieItemsGrid/MovieItemsGrid';
@@ -153,19 +147,9 @@ const MovieItemsContainer: FC<MovieItemsContainerProps> = ({
 
 	return (
 		<main>
-			<Toolbar
-				{...rest}
-				maxPage={maxPage}
-				page={page}
-				viewAs={viewAs}
-				key="toolbar"
-			/>
+			<Toolbar {...rest} maxPage={maxPage} page={page} viewAs={viewAs} key="toolbar" />
 			{filterOpen && (
-				<Filters
-					filters={filters}
-					updateFilters={updateFilters}
-					key="filters"
-				/>
+				<Filters filters={filters} updateFilters={updateFilters} key="filters" />
 			)}
 			{!error && data ? (
 				<>

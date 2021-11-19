@@ -35,10 +35,7 @@ class MyDocument extends Document {
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 					<meta name="application-name" content={appTitle} />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
-					<meta
-						name="apple-mobile-web-app-status-bar-style"
-						content="default"
-					/>
+					<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 					<meta name="apple-mobile-web-app-title" content={appTitle} />
 					<meta name="description" content={appDescription} />
 					<meta name="format-detection" content="telephone=no" />
@@ -46,11 +43,7 @@ class MyDocument extends Document {
 					<meta name="msapplication-config" content="/browserconfig.xml" />
 					<meta name="msapplication-TileColor" content={appColor} />
 					<meta name="msapplication-tap-highlight" content="no" />
-					<link
-						rel="mask-icon"
-						href="/safari-pinned-tab.svg"
-						color={safariTabColor}
-					/>
+					<link rel="mask-icon" href="/safari-pinned-tab.svg" color={safariTabColor} />
 					<meta name="twitter:card" content="summary" />
 					<meta name="twitter:url" content={NEXT_PUBLIC_SITE_URL} />
 					<meta name="twitter:title" content={appTitle} />

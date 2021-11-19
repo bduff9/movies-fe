@@ -47,15 +47,15 @@ interface MovieItemMoviesContainerProps {
 const MovieItemMoviesContainer: FC<MovieItemMoviesContainerProps> = ({
 	movieItemID,
 }): ReactElement => {
-	const { data, error, loading } = useQuery<
-		GetMovieItemsData,
-		GetMovieItemsVars
-	>(MOVIES_BY_MOVIE_ITEM_ID, {
-		fetchPolicy: 'cache-and-network',
-		variables: {
-			movieItemID,
+	const { data, error, loading } = useQuery<GetMovieItemsData, GetMovieItemsVars>(
+		MOVIES_BY_MOVIE_ITEM_ID,
+		{
+			fetchPolicy: 'cache-and-network',
+			variables: {
+				movieItemID,
+			},
 		},
-	});
+	);
 	const movies = data?.movies;
 
 	if (error) {

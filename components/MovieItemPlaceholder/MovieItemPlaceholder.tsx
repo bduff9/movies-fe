@@ -19,9 +19,7 @@ interface MovieItemPlaceholderProps {
 	title: string;
 }
 
-const MovieItemPlaceholder: FC<MovieItemPlaceholderProps> = ({
-	title,
-}): ReactElement => {
+const MovieItemPlaceholder: FC<MovieItemPlaceholderProps> = ({ title }): ReactElement => {
 	if (title.length > 10) title = title.substr(0, 10);
 
 	return (

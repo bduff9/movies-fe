@@ -30,3 +30,5 @@ yarn-error.log*
 
 # DeepCode
 .dccache
+
+.npmrc

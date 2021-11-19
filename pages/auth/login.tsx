@@ -14,16 +14,7 @@ along with this program.  If not, see {http://www.gnu.org/licenses/}.
 Home: https://asitewithnoname.com/
 */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	Button,
-	Card,
-	Content,
-	CardHeader,
-	Control,
-	Field,
-	Input,
-	Title,
-} from 'bloomer';
+import { Button, Card, Content, CardHeader, Control, Field, Input, Title } from 'bloomer';
 import { GetServerSideProps, NextPage } from 'next';
 import { signIn, getSession } from 'next-auth/client';
 import Head from 'next/head';
@@ -70,7 +61,7 @@ const Login: NextPage<LoginProps> = (): ReactElement => {
 
 										setFormState('SUBMITTED');
 									} catch (error) {
-										setError(error);
+										setError(`${error ?? 'Something went wrong during login'}`);
 										setFormState('ERRORED');
 									}
 

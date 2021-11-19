@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see {http://www.gnu.org/licenses/}.
 Home: https://asitewithnoname.com/
 */
-import { ApolloQueryResult } from '@apollo/client';
+import type { ApolloQueryResult } from '@apollo/client';
 import {
 	Card,
 	CardContent,
@@ -52,10 +52,7 @@ type MovieItemGridProps = {
 	) => Promise<ApolloQueryResult<MovieItemsContainerData>>;
 };
 
-const MovieItemGrid: FC<MovieItemGridProps> = ({
-	movieItem,
-	refetch,
-}): ReactElement => (
+const MovieItemGrid: FC<MovieItemGridProps> = ({ movieItem, refetch }): ReactElement => (
 	<Column className="is-one-fifth-desktop" isSize={{ mobile: 6, tablet: 4 }}>
 		<Card className={styles.movieItemCard}>
 			<CardHeader>
@@ -65,7 +62,11 @@ const MovieItemGrid: FC<MovieItemGridProps> = ({
 			</CardHeader>
 			<CardImage className="item-image">
 				{movieItem.itemURL ? (
-					<Image className="is-3by4" src={movieItem.itemURL} />
+					<Image
+						alt={`Case for ${movieItem.itemName}`}
+						className="is-3by4"
+						src={movieItem.itemURL}
+					/>
 				) : (
 					<MovieItemPlaceholder title={movieItem.itemName} />
 				)}
@@ -74,6 +75,7 @@ const MovieItemGrid: FC<MovieItemGridProps> = ({
 				<Media>
 					<MediaLeft>
 						<Image
+							alt={`Item is in ${movieItem.formatType} format`}
 							isSize="48x48"
 							src={getFormatImage(movieItem.formatType, movieItem.is3D)}
 						/>
@@ -91,23 +93,15 @@ const MovieItemGrid: FC<MovieItemGridProps> = ({
 						>
 							{movieItem.digitalType.indexOf('DC') > -1 ? 'DC' : null}
 						</span>
-						<span
-							className="item-attribute has-text-centered"
-							title={movieItem.caseType}
-						>
+						<span className="item-attribute has-text-centered" title={movieItem.caseType}>
 							{getCaseIcon(movieItem.caseType)}
 						</span>
-						<span
-							className="item-attribute has-text-centered"
-							title={movieItem.itemStatus}
-						>
+						<span className="item-attribute has-text-centered" title={movieItem.itemStatus}>
 							{getStatusIcon(movieItem.itemStatus)}
 						</span>
 					</MediaContent>
 				</Media>
-				<small>
-					{movieItem.releaseDate && getFormattedDate(movieItem.releaseDate)}
-				</small>
+				<small>{movieItem.releaseDate && getFormattedDate(movieItem.releaseDate)}</small>
 			</CardContent>
 			<CardFooter style={{ height: 71 }}>
 				<CardFooterItem>

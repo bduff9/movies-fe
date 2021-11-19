@@ -23,11 +23,7 @@ type ButtonLinkProps = {
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const ButtonLink: FC<ButtonLinkProps> = ({
-	onClick,
-	to,
-	...rest
-}): ReactElement => {
+const ButtonLink: FC<ButtonLinkProps> = ({ onClick, to, ...rest }): ReactElement => {
 	const router = useRouter();
 
 	return (

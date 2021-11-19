@@ -160,9 +160,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Input
 							id="itemName"
 							name="itemName"
-							isColor={
-								errors.itemName && touched.itemName ? 'danger' : undefined
-							}
+							isColor={errors.itemName && touched.itemName ? 'danger' : undefined}
 							value={values.itemName}
 							type="text"
 							placeholder="Title"
@@ -179,9 +177,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Select
 							id="formatType"
 							name="formatType"
-							isColor={
-								errors.formatType && touched.formatType ? 'danger' : undefined
-							}
+							isColor={errors.formatType && touched.formatType ? 'danger' : undefined}
 							value={values.formatType}
 							onChange={handleChange}
 						>
@@ -230,9 +226,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Select
 							id="digitalType"
 							name="digitalType"
-							isColor={
-								errors.digitalType && touched.digitalType ? 'danger' : undefined
-							}
+							isColor={errors.digitalType && touched.digitalType ? 'danger' : undefined}
 							value={values.digitalType}
 							onChange={handleChange}
 						>
@@ -254,9 +248,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Select
 							id="caseType"
 							name="caseType"
-							isColor={
-								errors.caseType && touched.caseType ? 'danger' : undefined
-							}
+							isColor={errors.caseType && touched.caseType ? 'danger' : undefined}
 							value={values.caseType}
 							onChange={handleChange}
 						>
@@ -278,9 +270,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Select
 							id="itemStatus"
 							name="itemStatus"
-							isColor={
-								errors.itemStatus && touched.itemStatus ? 'danger' : undefined
-							}
+							isColor={errors.itemStatus && touched.itemStatus ? 'danger' : undefined}
 							value={values.itemStatus}
 							onChange={handleChange}
 						>
@@ -302,9 +292,7 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 						<Input
 							id="releaseDate"
 							name="releaseDate"
-							isColor={
-								errors.releaseDate && touched.releaseDate ? 'danger' : undefined
-							}
+							isColor={errors.releaseDate && touched.releaseDate ? 'danger' : undefined}
 							value={values.releaseDate ?? ''}
 							type="date"
 							placeholder="Release Date"
@@ -361,7 +349,11 @@ const MovieItemForm: FC<MovieItemFormProps> = ({
 
 				<div style={{ width: 114 }}>
 					{values.itemURL ? (
-						<Image className="is-3by4" src={values.itemURL} />
+						<Image
+							alt={`Case for ${values.itemName}`}
+							className="is-3by4"
+							src={values.itemURL}
+						/>
 					) : (
 						<MovieItemPlaceholder title={values.itemName || ''} />
 					)}

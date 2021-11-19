@@ -13,7 +13,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see {http://www.gnu.org/licenses/}.
 Home: https://asitewithnoname.com/
 */
-import { ApolloQueryResult, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import type { ApolloQueryResult } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardFooterItem } from 'bloomer';
 import gql from 'graphql-tag';
@@ -101,13 +102,7 @@ const ToggleMovieItemWatched: FC<ToggleMovieItemWatchedProps> = ({
 				await refetch();
 			}}
 		>
-			{loading ? (
-				<FontAwesomeIcon icon="spinner" spin />
-			) : error ? (
-				'Error!'
-			) : (
-				text
-			)}
+			{loading ? <FontAwesomeIcon icon="spinner" spin /> : error ? 'Error!' : text}
 		</CardFooterItem>
 	);
 };

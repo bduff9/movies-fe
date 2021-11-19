@@ -13,11 +13,3 @@
  * along with this program.  If not, see {http://www.gnu.org/licenses/}.
  * Home: https://asitewithnoname.com/
  */
-declare namespace NodeJS {
-	interface Global {
-		fetch: (
-			input: RequestInfo,
-			init?: RequestInit | undefined,
-		) => Promise<Response>;
-	}
-}

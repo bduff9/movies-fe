@@ -5,6 +5,7 @@ module.exports = {
 		es6: true,
 		jest: true,
 		node: true,
+		es2021: true,
 	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -13,17 +14,18 @@ module.exports = {
 			jsx: true,
 			warnOnUnsupportedTypeScriptVersion: false,
 		},
-		ecmaVersion: 7,
+		ecmaVersion: 13,
 		sourceType: 'module',
 	},
 	plugins: [
+		'@typescript-eslint',
+		'clean-regex',
 		'css-modules',
 		'graphql',
 		'import',
 		'prettierx',
 		'react',
 		'react-hooks',
-		'@typescript-eslint',
 	],
 	settings: {
 		prettierx: {
@@ -35,15 +37,15 @@ module.exports = {
 	},
 	extends: [
 		'eslint:recommended',
+		'next',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:clean-regex/recommended',
 		'plugin:css-modules/recommended',
 		'plugin:import/errors',
 		'plugin:import/typescript',
 		'plugin:import/warnings',
+		'plugin:prettierx/standardize',
 		'plugin:react/recommended',
-		'plugin:prettierx/@typescript-eslint',
-		'plugin:prettierx/standardx',
-		'plugin:prettierx/react',
 		'plugin:you-dont-need-momentjs/recommended',
 	],
 	rules: {
@@ -69,12 +71,14 @@ module.exports = {
 				args: 'none',
 			},
 		],
-		quotes: 'off',
+		'quotes': 'off',
 		'import/named': 2,
+		'import/no-named-as-default': 'off',
+		'import/no-anonymous-default-export': 'off',
 		'import/order': [
 			'error',
 			{
-				alphabetize: { caseInsensitive: true, order: 'asc' },
+				'alphabetize': { caseInsensitive: true, order: 'asc' },
 				'newlines-between': 'always',
 			},
 		],
@@ -128,10 +132,7 @@ module.exports = {
 		],
 		'react/prop-types': [0],
 		'react/boolean-prop-naming': ['error'],
-		'react/jsx-curly-brace-presence': [
-			'error',
-			{ props: 'never', children: 'never' },
-		],
+		'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
 		'graphql/template-strings': [

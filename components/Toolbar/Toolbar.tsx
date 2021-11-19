@@ -153,10 +153,7 @@ const Toolbar: FC<ToolbarProps> = ({
 				</div>
 				<div className={styles.toolbarEnd}>
 					<a
-						className={clsx(
-							styles.toolbarItem,
-							page < 2 ? styles.disabled : undefined,
-						)}
+						className={clsx(styles.toolbarItem, page < 2 ? styles.disabled : undefined)}
 						href="#"
 						onClick={(ev): false => goToPage(1, ev)}
 						title="Go to first"
@@ -164,10 +161,7 @@ const Toolbar: FC<ToolbarProps> = ({
 						<FontAwesomeIcon icon={['far', 'chevron-double-left']} />
 					</a>
 					<a
-						className={clsx(
-							styles.toolbarItem,
-							page < 2 ? styles.disabled : undefined,
-						)}
+						className={clsx(styles.toolbarItem, page < 2 ? styles.disabled : undefined)}
 						title="Go to previous"
 						href="#"
 						onClick={(ev): false => goToPage(page - 1, ev)}
@@ -224,9 +218,7 @@ const Toolbar: FC<ToolbarProps> = ({
 									aria-controls="dropdown-menu"
 									aria-haspopup="true"
 									isOutlined
-									onClick={(): void =>
-										setIsViewActive((isActive): boolean => !isActive)
-									}
+									onClick={(): void => setIsViewActive((isActive): boolean => !isActive)}
 								>
 									<FontAwesomeIcon icon={getViewIcon()} />
 									&nbsp;
@@ -258,9 +250,7 @@ const Toolbar: FC<ToolbarProps> = ({
 									aria-controls="dropdown-menu"
 									aria-haspopup="true"
 									isOutlined
-									onClick={(): void =>
-										setIsSortActive((isActive): boolean => !isActive)
-									}
+									onClick={(): void => setIsSortActive((isActive): boolean => !isActive)}
 								>
 									<FontAwesomeIcon icon="sort" />
 									&nbsp;

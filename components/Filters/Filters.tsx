@@ -14,14 +14,7 @@ along with this program.  If not, see {http://www.gnu.org/licenses/}.
 Home: https://asitewithnoname.com/
 */
 import { Box, Button, Control, Field, Input, Label, Select } from 'bloomer';
-import React, {
-	ChangeEvent,
-	FC,
-	FormEvent,
-	memo,
-	ReactElement,
-	useState,
-} from 'react';
+import React, { ChangeEvent, FC, FormEvent, memo, ReactElement, useState } from 'react';
 
 import {
 	CaseType,
@@ -38,10 +31,7 @@ interface FiltersProps {
 	updateFilters: (filters: TFilterFilters) => void;
 }
 
-const Filters: FC<FiltersProps> = ({
-	filters,
-	updateFilters,
-}): ReactElement => {
+const Filters: FC<FiltersProps> = ({ filters, updateFilters }): ReactElement => {
 	const [currentFilters, setCurrentFilters] = useState<TFilterFilters>(filters);
 
 	const convertStateToProps = (ev: FormEvent<HTMLFormElement>): false => {
@@ -166,10 +156,7 @@ const Filters: FC<FiltersProps> = ({
 							<option value="">All Digital Types</option>
 							{Object.keys(DigitalType).map(
 								(digitalType): ReactElement => (
-									<option
-										key={`digital-type-${digitalType}`}
-										value={digitalType}
-									>
+									<option key={`digital-type-${digitalType}`} value={digitalType}>
 										{digitalType}
 									</option>
 								),
@@ -199,11 +186,7 @@ const Filters: FC<FiltersProps> = ({
 				<Field>
 					<Label>3D: </Label>
 					<Control>
-						<Select
-							name="is3D"
-							onChange={updateStateFromForm}
-							value={is3D?.value || ''}
-						>
+						<Select name="is3D" onChange={updateStateFromForm} value={is3D?.value || ''}>
 							<option value="">All 3D Types</option>
 							{Object.keys(YesNo).map(
 								(opt): ReactElement => (

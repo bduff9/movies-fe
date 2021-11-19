@@ -23,9 +23,7 @@ type LayoutProps = {
 	isLoading: boolean;
 };
 
-const Layout: FC<LayoutProps> = ({
-	children /* , isLoading */,
-}): ReactElement => {
+const Layout: FC<LayoutProps> = ({ children /* , isLoading */ }): ReactElement => {
 	return (
 		<div className={styles.fullCoverage}>
 			<Header />

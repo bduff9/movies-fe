@@ -13,15 +13,13 @@
  * along with this program.  If not, see {http://www.gnu.org/licenses/}.
  * Home: https://asitewithnoname.com/
  */
-import {
-	ApolloClient,
-	InMemoryCache,
-	NormalizedCacheObject,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import type { NormalizedCacheObject } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { createHttpLink } from '@apollo/client/link/http';
 import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 import fetch from 'isomorphic-unfetch';
+import { getSession } from 'next-auth/client';
 
 import { NEXT_PUBLIC_API_URL } from './constants';
 
@@ -30,11 +28,15 @@ const isBrowser = !!process.browser;
 
 if (!isBrowser) global.fetch = fetch;
 
-export const getApolloClient = async (): Promise<
-	ApolloClient<NormalizedCacheObject>
-> => {
+export const getApolloClient = async (): Promise<ApolloClient<NormalizedCacheObject>> => {
 	const authLink = setContext(
 		async (_, { headers }): Promise<unknown> => {
+			const session = await getSession({});
+
+			if (session) {
+				headers.authorization = `Bearer ${session.accessToken}`;
+			}
+
 			return {
 				headers: {
 					...headers,

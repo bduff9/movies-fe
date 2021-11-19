@@ -84,27 +84,16 @@ library.add(
 	farTable,
 );
 
-export const formatForGraphQL = (str: string): string =>
-	str.replace(/[^a-zA-Z0-9]/g, '');
+export const formatForGraphQL = (str: string): string => str.replace(/[^a-zA-Z0-9]/g, '');
 
 export const getCaseIcon = (caseType: CaseType): JSX.Element => {
 	switch (caseType) {
 		case 'Plain':
 			return (
-				<FontAwesomeIcon
-					icon="square"
-					className="has-text-primary"
-					title={caseType}
-				/>
+				<FontAwesomeIcon icon="square" className="has-text-primary" title={caseType} />
 			);
 		case 'Box':
-			return (
-				<FontAwesomeIcon
-					icon="box"
-					className="has-text-primary"
-					title={caseType}
-				/>
-			);
+			return <FontAwesomeIcon icon="box" className="has-text-primary" title={caseType} />;
 		case 'Slipcover':
 			return (
 				<FontAwesomeIcon
@@ -122,13 +111,7 @@ export const getCaseIcon = (caseType: CaseType): JSX.Element => {
 				/>
 			);
 		case 'Steelbook':
-			return (
-				<FontAwesomeIcon
-					icon="book"
-					className="has-text-primary"
-					title={caseType}
-				/>
-			);
+			return <FontAwesomeIcon icon="book" className="has-text-primary" title={caseType} />;
 		default:
 			console.error('Invalid case type passed', caseType);
 
@@ -147,13 +130,7 @@ export const getFormatImage = (format: FormatType, is3D: YesNo): string => {
 export const getStatusIcon = (status: StatusType): JSX.Element => {
 	switch (status) {
 		case 'Owned':
-			return (
-				<FontAwesomeIcon
-					icon="check"
-					className="has-text-success"
-					title={status}
-				/>
-			);
+			return <FontAwesomeIcon icon="check" className="has-text-success" title={status} />;
 		case 'Selling':
 			return (
 				<FontAwesomeIcon
@@ -163,13 +140,7 @@ export const getStatusIcon = (status: StatusType): JSX.Element => {
 				/>
 			);
 		case 'Wanted':
-			return (
-				<FontAwesomeIcon
-					icon={['far', 'clipboard']}
-					className=""
-					title={status}
-				/>
-			);
+			return <FontAwesomeIcon icon={['far', 'clipboard']} className="" title={status} />;
 		case 'Waiting':
 			return <FontAwesomeIcon icon="truck" className="" title={status} />;
 		default:

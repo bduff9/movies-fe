@@ -13,9 +13,7 @@
  * along with this program.  If not, see {http://www.gnu.org/licenses/}.
  * Home: https://asitewithnoname.com/
  */
-export const convertGQLValueForDisplay = <T extends string>(
-	value: T,
-): string => {
+export const convertGQLValueForDisplay = <T extends string>(value: T): string => {
 	switch (value) {
 		case 'BluRay':
 			return 'Blu-ray';

@@ -103,20 +103,20 @@ type EditMovieItemProps = {
 const EditMovieItem: NextPage<EditMovieItemProps> = ({ id }): ReactElement => {
 	const router = useRouter();
 	const itemID = parseInt(id, 10);
-	const [
-		editMovieItem,
-		{ error: editError, loading: editLoading },
-	] = useMutation<MutationUpdateMovieItemArgs, MovieItem>(EDIT_MOVIE_ITEM, {
+	const [editMovieItem, { error: editError, loading: editLoading }] = useMutation<
+		MutationUpdateMovieItemArgs,
+		MovieItem
+	>(EDIT_MOVIE_ITEM, {
 		awaitRefetchQueries: true,
 		refetchQueries: ['MovieItemsForDisplay', 'MovieItems'],
 	});
-	const { data, error, loading } = useQuery<
-		{ movieItem: MovieItem },
-		QueryMovieItemArgs
-	>(MOVIE_ITEM_BY_ID, {
-		fetchPolicy: 'cache-and-network',
-		variables: { itemID },
-	});
+	const { data, error, loading } = useQuery<{ movieItem: MovieItem }, QueryMovieItemArgs>(
+		MOVIE_ITEM_BY_ID,
+		{
+			fetchPolicy: 'cache-and-network',
+			variables: { itemID },
+		},
+	);
 	const movieItem = data?.movieItem;
 
 	return (
@@ -146,11 +146,7 @@ const EditMovieItem: NextPage<EditMovieItemProps> = ({ id }): ReactElement => {
 											await router.push('/');
 										}}
 									/>
-									{editLoading ? (
-										<div>Saving...</div>
-									) : (
-										editError && <div>{editError}</div>
-									)}
+									{editLoading ? <div>Saving...</div> : editError && <div>{editError}</div>}
 									{movieItem && movieItem.itemID != null && (
 										<MovieItemMoviesContainer movieItemID={movieItem.itemID} />
 									)}

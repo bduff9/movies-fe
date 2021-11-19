@@ -16,13 +16,7 @@ Home: https://asitewithnoname.com/
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import {
-	CaseType,
-	DigitalType,
-	FormatType,
-	StatusType,
-	YesNo,
-} from '../../graphql/output';
+import { CaseType, DigitalType, FormatType, StatusType, YesNo } from '../../graphql/output';
 
 import MovieItemForm from './MovieItemForm';
 

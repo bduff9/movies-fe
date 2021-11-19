@@ -91,9 +91,7 @@ const AddMovieItem: NextPage<AddMovieItemProps> = (): ReactElement => {
 				<Columns isCentered isGrid isVCentered>
 					<Column>
 						<MovieItemForm
-							onAddSubmit={async (
-								movieItem: MutationAddMovieItemArgs,
-							): Promise<void> => {
+							onAddSubmit={async (movieItem: MutationAddMovieItemArgs): Promise<void> => {
 								await addMovieItem({ variables: movieItem });
 								await router.push('/');
 							}}

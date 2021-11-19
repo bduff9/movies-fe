@@ -24,11 +24,7 @@ type ErrorProps = {
 	statusCode: number;
 };
 
-const Error: NextPage<ErrorProps> = ({
-	statusCode,
-	hasGetInitialPropsRun,
-	err,
-}) => {
+const Error: NextPage<ErrorProps> = ({ statusCode, hasGetInitialPropsRun, err }) => {
 	if (!hasGetInitialPropsRun && err) {
 		// getInitialProps is not called in case of
 		// https://github.com/vercel/next.js/issues/8592. As a workaround, we pass

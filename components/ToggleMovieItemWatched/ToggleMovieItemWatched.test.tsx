@@ -13,7 +13,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see {http://www.gnu.org/licenses/}.
 Home: https://asitewithnoname.com/
 */
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing';
+import type { MockedResponse } from '@apollo/client/testing';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
@@ -27,11 +28,7 @@ describe('ToggleMovieItemWatched', (): void => {
 	beforeEach((): void => {
 		wrapper = shallow(
 			<MockedProvider mocks={mocks}>
-				<ToggleMovieItemWatched
-					isWatched={false}
-					itemID={1}
-					refetch={jest.fn()}
-				/>
+				<ToggleMovieItemWatched isWatched={false} itemID={1} refetch={jest.fn()} />
 			</MockedProvider>,
 		);
 	});
