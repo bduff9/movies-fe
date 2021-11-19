@@ -22,6 +22,13 @@ import Adapters from 'next-auth/adapters';
 import Providers from 'next-auth/providers';
 
 import Models from '../../../models';
+import {
+	DAYS_IN_WEEK,
+	HOURS_IN_DAY,
+	MINUTES_IN_HOUR,
+	SECONDS_IN_MINUTE,
+	WEEKS_IN_YEAR,
+} from '../../../utils/constants';
 
 const {
 	DATABASE_URL,
@@ -29,7 +36,7 @@ const {
 	EMAIL_PASSWORD,
 	EMAIL_USERNAME,
 	JWT_SECRET,
-	NEXTAUTH_URL,
+	secret,
 } = process.env;
 
 if (!DATABASE_URL) throw new Error('Missing database URL');
@@ -143,14 +150,11 @@ const options: NextAuthOptions = {
 			from: EMAIL_FROM,
 		}),
 	],
-	secret: 'The ASWNN Movies application',
+	secret,
 	session: {
-		jwt: true,
-		maxAge: 30 * 24 * 60 * 60, // 30 days
+		maxAge:
+			WEEKS_IN_YEAR * DAYS_IN_WEEK * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE,
 	},
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	site: NEXTAUTH_URL,
 };
 
 // ts-prune-ignore-next
