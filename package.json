@@ -72,7 +72,7 @@
     "next-pwa": "5.4.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-toastify": "<8.0.0",
+    "react-toastify": "7.0.4",
     "styled-components": "5.3.3",
     "universal-cookie": "4.0.4",
     "yup": "0.32.11"
