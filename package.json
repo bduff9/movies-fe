@@ -52,7 +52,7 @@
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
-    "@fortawesome/react-fontawesome": "0.1.16",
+    "@fortawesome/react-fontawesome": "0.2.2",
     "@sentry/browser": "6.15.0",
     "@zeit/next-css": "1.0.1",
     "apollo3-cache-persist": "0.13.0",
